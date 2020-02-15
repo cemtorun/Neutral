@@ -6,7 +6,7 @@ const AMAZON_PRODUCT = 'amazon.ca/gp/product/';
 const AMAZON_CART = 'amazon.com/gp/cart/view.html?ref_=nav_cart';
 
 chrome.tabs.getSelected(null, function(tab) {
-    if (tab.url.includes('amazon.com') {
+    if (tab.url.includes('amazon.com')) {
       if (tab.url.includes(AMAZON_PRODUCT)) {
         // TODO: Handle duplicates?
         tab.do
@@ -14,7 +14,7 @@ chrome.tabs.getSelected(null, function(tab) {
 
       }
       // EAMAZON CART: If empty cart or user is not viewing the cart webpage
-      elseif (tab.url.includes('amazon.com/gp/cart/view.html?ref_=nav_cart') {
+      else if (tab.url.includes('amazon.com/gp/cart/view.html?ref_=nav_cart')) {
         var itemsList = document.querySelector('.sc-list-item-content');
         if (itemsList != null) {
           document.querySelector('.analytics_cont').classList.add('hidden');
