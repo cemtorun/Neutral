@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Neutral</title>
@@ -7,50 +8,51 @@
 </head>
 
 <body>
-  <div class="report">
-    <!-- HEADER -->
-    <h2>neutral</h2>
-    <h1 class="title">Take Action Today 🙌</h1>
-    <hr />
+    <div class="report">
+        <!-- HEADER -->
+        <h2>neutral</h2>
+        <h1 class="title">Take Action Today 🙌</h1>
+        <hr />
 
-      <!-- PUT stat val VAR HERE -->
-    <p class="donate donate-description"><strong>Neutralize</strong> your carbon footprint. Neutral works with organizations around San Francisco to offset carbon emissions.</p>
-    <div class="donate-data-container">
-      <div class="donate-data">
-        <p class="donate subtitle">CO<sub>2</sub> Consumption</p>
-        <!-- PUT MERCHANT NAME VAR HERE -->
-        <p id="co2e" class="donate statistic">759</p>
-        <p class="donate description">kilograms</p>
-        <div class="donate-logos">
-          <p class="donate description"><strong>Amazon.ca</strong></p>
+        <!-- PUT stat val VAR HERE -->
+        <p class="donate donate-description"><strong>Neutralize</strong> your carbon footprint. Neutral works with organizations around San Francisco to offset carbon emissions.</p>
+        <div class="donate-data-container">
+            <div class="donate-data">
+                <p class="donate subtitle">CO<sub>2</sub> Consumption</p>
+                <!-- PUT MERCHANT NAME VAR HERE -->
+                <p id="co2e" class="donate statistic">759</p>
+                <p class="donate description">kilograms</p>
+                <div class="donate-logos">
+                    <p class="donate description"><strong>Amazon.ca</strong></p>
+                </div>
+            </div>
+
+            <div class="donate-data">
+                <p class="donate subtitle">Offset your Footprint</p>
+                <!-- PUT statistic val VAR HERE -->
+                <p class="donate statistic">$21.49</p>
+                <p class="donate description">donation</p>
+                <div class="donate donate-logos">
+                    <img src="urban-forest-logo.png" height="40px" width="45px" class="donate description"></img>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="donate-data">
-        <p class="donate subtitle">Offset your Footprint</p>
-        <!-- PUT statistic val VAR HERE -->
-        <p class="donate statistic">$3</p>
-        <p class="donate description">donation</p>
-        <div class="donate donate-logos">
-          <img src="urban-forest-logo.png" height="40px" width="45px" class="donate description"></img>
+        <div class="donate button-container">
+            <form action="">
+                <input id="gotoDashboard" class="button" type="submit" value="Donate $21.49">
+            </form>
+            <a href="">Alternatives</a>
         </div>
-      </div>
     </div>
-    <div class="donate button-container">
-      <form action="">
-        <input id="gotoDashboard" class="button" type="submit" value="Donate $3">
-      </form>
-      <a href="">Alternatives</a>
-    </div>
-  </div>
 
-  <script src="popup.js"></script>
+    <script src="popup.js"></script>
 
-  <!--
+    <!--
     This HTML file opens when you click on icon from the toolbar.
 
     To begin the development, run `npm run watch`.
     To create a production bundle, use `npm run build`.
   -->
 </body>
+
 </html>

@@ -15,6 +15,7 @@ function carbon() {
     graphLabel = "Carbon Usage";
     chartData = [];
     chartDates = [];
+    historicalKG = 0;
     for (var i = 0; i < CO2_TREND.length; i++) {
         console.log(CO2_TREND)
 
@@ -31,6 +32,15 @@ function energy() {
     colour = "rgb(255,200,69)";
     bgColour = "rgb(255,200,69,0.5)";
     graphLabel = "Energy Usage";
+    chartData = [];
+    chartDates = [];
+    for (var i = 0; i < ENERGY_TREND.length; i++) {
+        console.log(ENERGY_TREND)
+        chartData.push(ENERGY_TREND[i].energy);
+        chartDates.push(ENERGY_TREND[i].date);
+
+    }
+
     drawGraph();
 }
 
@@ -38,6 +48,14 @@ function water() {
     colour = "rgb(101,193,214)";
     bgColour = "rgb(101,193,214,0.5)";
     graphLabel = "Water Usage";
+    chartData = [];
+    chartDates = [];
+    for (var i = 0; i < WATER_TREND.length; i++) {
+        console.log(WATER_TREND)
+        chartData.push(WATER_TREND[i].water);
+        chartDates.push(WATER_TREND[i].date);
+
+    }
     drawGraph();
 }
 
@@ -76,6 +94,7 @@ function drawGraph() {
             }
         }
     });
+    recalculate();
 }
 
 var ctx2 = document.getElementById('category-chart');

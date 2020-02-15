@@ -1,9 +1,12 @@
+document.addEventListener('DOMContentLoaded', init, false);
+
 // Variables to Set
 var historicalKG = 0;
-var goalTonnes = 10;
+var goalTonnes = 4000;
 var percentDonated = 0.6;
 var totalEmissions;
 var lastFour = [];
+var initFirst = true;
 
 
 // GLOBALS FOR DATA
@@ -14,14 +17,20 @@ var CATEGORY_PIE = [];
 var PURCHASE_HISTORY = [];
 
 function recalculate() {
+    historicalKG = 0;
+    for (var i = 0; i < CO2_TREND.length; i++) {
+        historicalKG += CO2_TREND[i].co2;
+    }
 
     //Variables Calculated
+    console.log("HS");
+    console.log(historicalKG);
     totalEmissions = historicalKG * 0.00110231; //convert to tons
+    totalEmissions = 3293
     totalEmissions = parseInt(totalEmissions, 10)
     var febEmittions = totalEmissions;
 
     //whale image 
-    console.log("recalculate");
     lastFour = [];
     for (var i = 0; i < 4; i++) {
         let index = PURCHASE_HISTORY.length - 1 - i;
@@ -46,7 +55,8 @@ function recalculate() {
     donatedAmount = parseInt(donatedAmount, 10)
 
 
-    var nationalAverageCompare = (historicalKG / 19958.1 * 0.2); //divided by 22 ton average 20% is travel/stuff
+
+    var nationalAverageCompare = (totalEmissions / 193.1 * 0.2); //divided by 22 ton average 20% is travel/stuff
     nationalAverageCompare = parseInt(nationalAverageCompare, 10)
 
     var treeNum = donatedAmount / 0.1299999821 / 60;
@@ -71,10 +81,16 @@ function recalculate() {
 }
 
 
-document.addEventListener('DOMContentLoaded', init, false);
+
 
 function init() {
-    getData();
+    console.log("INIT IS CALLED");
+    if (initFirst) {
+
+        getData();
+        initFirst = false;
+    }
+
 
     //event listeners
     document.getElementById("changeWhale").addEventListener("click", changeWhales);
@@ -96,6 +112,9 @@ function init() {
     });
     document.getElementById("changeWater").addEventListener("click", function() {
         document.getElementById('dataVisual').src = "water.png";
+        whales = totalEmissions / 0.003785874;
+        whales = parseInt(whales, 10);
+        whales += " swimming pools"
         document.querySelector('.whales').innerHTML = whales;
     });
 
@@ -115,6 +134,7 @@ function changeWhales() {
 }
 
 function getData() {
+    console.log("GET DATA CALLED");
     chrome.storage.local.get('amazon_product_info', function(result) {
         CO2_TREND = [];
         CATEGORY_PIE = [];
@@ -132,11 +152,11 @@ function getData() {
                 });
                 WATER_TREND.push({
                     date: product.purchase_date,
-                    co2: product.api_co2_result.water
+                    water: product.api_co2_result.water
                 });
                 ENERGY_TREND.push({
                     date: product.purchase_date,
-                    co2: product.api_co2_result.energy
+                    energy: product.api_co2_result.energy
                 });
                 CATEGORY_PIE.push({
                     category: category,
@@ -149,7 +169,8 @@ function getData() {
                 });
             }
         });
-
+        console.log("THISONE");
+        console.log(ENERGY_TREND);
         post_recieve();
     });
 }
