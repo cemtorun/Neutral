@@ -5,6 +5,7 @@
 // For more information on background script,
 // See https://developer.chrome.com/extensions/background_pages
 
+console.log("before url check");
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'GREETINGS') {
     const message = `Hi ${
@@ -19,3 +20,17 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     });
   }
 });
+
+
+
+// chrome.tabs.query({active: true, activeWindow: true}}, function(tab) {
+//   var url = tab.url;
+//   console.log(`cchecking url ${url}');
+//   if ((url.includes("amazon.ca/") || url.includes("amazon.com/")) && url.includes('/cart/')) {
+//       console.log("change window");
+//       chrome.browserAction.onClicked.addListener(function() {
+//          chrome.windows.create({'url': '../public/checkout.html', 'type': 'popup'}, function(window) {
+//          });
+//       });
+//   }
+// });

@@ -85,7 +85,7 @@ function amazon_product_information_collection() {
         });
       }
     });
-  
+
     let contains = false;
     currData.forEach((product) => {
       if (product.product_id == data.product_id) {
