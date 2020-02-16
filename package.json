@@ -19,6 +19,11 @@
     "size-plugin": "^2.0.1",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3",
     "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "chart.js": "^2.9.3",
+    "npm": "^6.13.7"
   }
 }
