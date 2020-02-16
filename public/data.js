@@ -8,6 +8,8 @@ var lastFour = [];
 
 // GLOBALS FOR DATA
 var CO2_TREND = [];
+var ENERGY_TREND = [];
+var WATER_TREND = [];
 var CATEGORY_PIE = [];
 var PURCHASE_HISTORY = [];
 
@@ -127,6 +129,14 @@ function getData() {
                 CO2_TREND.push({
                     date: product.purchase_date,
                     co2: product.api_co2_result.CO2e
+                });
+                WATER_TREND.push({
+                    date: product.purchase_date,
+                    co2: product.api_co2_result.water
+                });
+                ENERGY_TREND.push({
+                    date: product.purchase_date,
+                    co2: product.api_co2_result.energy
                 });
                 CATEGORY_PIE.push({
                     category: category,

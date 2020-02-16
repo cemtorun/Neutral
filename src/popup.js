@@ -17,10 +17,36 @@ chrome.tabs.getSelected(null, function (tab) {
       if (popupPage.includes("product")) {
         document.getElementById("name").innerHTML = cur_prod.product_name;
         document.getElementById("category").innerHTML = cur_prod.api_category;
+
+        // Display appropriate image
+        // Default image - shopping.png
+        var product_image = document.getElementById("product-image");
+
+        if (cur_prod.api_category.includes("/Home & Garden")) {
+          console.log(`Category is home`);
+          product_image.src = "icons/home.png";
+          product_image.minWidth = "200px";
+        } else if (cur_prod.api_category.includes("/Computers & Electronics")) {
+          console.log(`Category is electronics`);
+          product_image.src = "icons/electronics.png";
+          product_image.minWidth = "150px";
+        } else if (cur_prod.api_category.includes("/Shopping/Toys")) {
+          console.log(`Category is toys`);
+          product_image.src = "icons/toys.png";
+          product_image.minWidth = "150px";
+        } else if (cur_prod.api_category.includes("/Home & Garden/Bed & Bath")) {
+          console.log(`Category is bath`);
+          product_image.src = "icons/bath-toiletries.png";
+          product_image.minWidth = "150px"
+        } else {
+          product_image.src = "icons/shopping.png";
+          product_image.minWidth = "200px"
+        }
       }
       if (popupPage.includes("details")) {
         document.getElementById("name").innerHTML = cur_prod.product_name;
         document.getElementById("co2e").innerHTML = cur_prod.api_co2_result.CO2e;
+        document.getElementById("co2e_water").innerHTML = cur_prod.api_co2_result.water;
       }
     });
   }
@@ -34,7 +60,7 @@ chrome.tabs.getSelected(null, function (tab) {
       }
       ret.substr(0,ret.length - 1)
     `;
-    chrome.tabs.executeScript(tab.id, {      
+    chrome.tabs.executeScript(tab.id, {
       code: execute
     }, (obj) => {
       console.log(obj);
@@ -53,7 +79,9 @@ chrome.tabs.getSelected(null, function (tab) {
         chrome.storage.local.get('amazon_product_info', function (result) {
           const cur_prod = result.amazon_product_info.filter((p) => p.product_id == product_id)[0];
           co2_total += cur_prod.api_co2_result.CO2e * quantity;
+          co2_water += cur_prod.api_co2_result.water * quantity;
           document.getElementById("co2e").innerHTML = co2_total;
+          document.getElementById("co2e_water").innerHTML = co2_water;
         });
       });
 
