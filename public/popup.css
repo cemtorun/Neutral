@@ -57,6 +57,7 @@ h2 {
 
 body {
   width: 450px;
+  display: flex;
 }
 
 a {
@@ -77,7 +78,7 @@ hr {
   display: flex;
   justify-content: left;
   flex-direction: column;
-  padding: 40px 60px;
+  padding: 40px 45px;
 }
 
 .title {
@@ -126,6 +127,14 @@ p.merchant {
 .product {
   margin-bottom: 15px;
   width: 70%;
+}
+
+.product-img {
+  justify-content: flex-end;
+  align-self: center;
+  position: fixed;
+  right: -33px;
+  top: 210px;
 }
 
 .button-container {

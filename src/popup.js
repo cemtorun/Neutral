@@ -17,6 +17,15 @@ chrome.tabs.getSelected(null, function (tab) {
       if (popupPage.includes("product")) {
         document.getElementById("name").innerHTML = cur_prod.product_name;
         document.getElementById("category").innerHTML = cur_prod.api_category;
+
+        // Display appropriate image
+        // if (cur_prod.api_category.startsWith("/Home & Garden")) {
+        //
+        // } else if () {
+        //
+        // } else {
+        //
+        // }
       }
       if (popupPage.includes("details")) {
         document.getElementById("name").innerHTML = cur_prod.product_name;
@@ -34,7 +43,7 @@ chrome.tabs.getSelected(null, function (tab) {
       }
       ret.substr(0,ret.length - 1)
     `;
-    chrome.tabs.executeScript(tab.id, {      
+    chrome.tabs.executeScript(tab.id, {
       code: execute
     }, (obj) => {
       console.log(obj);
