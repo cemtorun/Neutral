@@ -118,8 +118,8 @@ hr.gray {
     width: 100px;
 }
 
-.left-tab>button {
-    background: transparent;
+.left-tab button {
+    background-color: #9BA2B6 !important;
 }
 
 .left-tab {
@@ -128,7 +128,7 @@ hr.gray {
     border-top-left-radius: 8px;
     text-align: center;
     padding: 4px 8px;
-    margin-left: -64px;
+    margin-left: -72px;
     top: 26px;
     max-width: 80px;
     transform: rotate(-90deg);
@@ -136,13 +136,13 @@ hr.gray {
 }
 
 .shift-16 {
-    top: 96px;
-    margin-left: -71px;
+    top: 105px;
+    margin-left: -80px;
 }
 
 .shift-32 {
-    top: 172px;
-    margin-left: -68px;
+    top: 191px;
+    margin-left: -78px;
 }
 
 .left-tab h4 {
