@@ -5,7 +5,7 @@ const API_LOCAL_CO2E = "https://e8d8e350.ngrok.io/OneDrive/Programming/TH2020/co
 
 /* ALL PAGE FUNCTIONS */
 function runPage() {
-  setTimeout(amazon_product_information_collection, 2500);
+  setTimeout(amazon_product_information_collection, 200);
 }
 
 /* AMAZON BACKGROUND INFORMATION COLLECTION */
@@ -21,7 +21,8 @@ function amazon_product_information_collection() {
       price: 0.0,
       api_classification: {},
       api_category: "",
-      api_co2_result: {}
+      api_co2_result: {},
+      purchase_date: undefined
     }
 
     // Find product ASIN

@@ -1,11 +1,13 @@
 // Variables to Set
 var historicalKG = 1000000;
-
 var goalTonnes = 1200;
-
 var percentDonated = 0.6;
 
 
+// GLOBALS FOR DATA
+var CO2_TREND = [];
+var CATEGORY_PIE = [];
+var PURCHASE_HISTORY = [];
 
 
 //Variables Calculated
@@ -14,8 +16,6 @@ totalEmissions = parseInt(totalEmissions, 10)
 var febEmittions = totalEmissions;
 
 //whale image 
-
-
 
 
 // progress bar 
@@ -41,7 +41,7 @@ document.getElementById("p-bar2").style.width = (barWidth2 * 100) + "%";
 document.addEventListener('DOMContentLoaded', init, false);
 
 function init() {
-
+    getData();
     changeWhales();
 }
 //event listeners
@@ -61,7 +61,7 @@ function changeWhales() {
     document.querySelector('.whales').innerHTML = whales;
 }
 
-document.getElementById("changeTree").addEventListener("click", function() {
+document.getElementById("changeTree").addEventListener("click", function () {
     document.getElementById('dataVisual').src = "tree.png";
     whales = totalEmissions / 0.1299999821 / 60;
     whales = parseInt(whales, 10);
@@ -70,7 +70,7 @@ document.getElementById("changeTree").addEventListener("click", function() {
 
 });
 
-document.getElementById("changePizza").addEventListener("click", function() {
+document.getElementById("changePizza").addEventListener("click", function () {
     document.getElementById('dataVisual').src = "pizza.png";
     whales = totalEmissions / 0.33085874;
     whales = parseInt(whales, 10);
@@ -78,7 +78,7 @@ document.getElementById("changePizza").addEventListener("click", function() {
     document.querySelector('.whales').innerHTML = whales;
 });
 
-document.getElementById("changeWater").addEventListener("click", function() {
+document.getElementById("changeWater").addEventListener("click", function () {
     document.getElementById('dataVisual').src = "water.png";
     document.querySelector('.whales').innerHTML = whales;
 });
@@ -93,3 +93,32 @@ document.querySelector('.goalTonnes').innerHTML = goalTonnes;
 document.querySelector('.donatedAmount2').innerHTML = donatedAmount;
 document.querySelector('.treeNum').innerHTML = treeNum;
 document.querySelector('.treeDollar').innerHTML = treeDollar;
+
+function getData() {
+    let currData = [];
+    chrome.storage.local.get('amazon_product_info', function (result) {
+        console.log(result);
+        result.amazon_product_info.forEach(product => {
+            let category = product.api_category;
+            if (product.api_category.includes("/")) {
+                category = product.api_category.split("/")[1];
+            }
+
+            if (product.purchase_date) {
+                CO2_TREND.push({
+                    date: product.purchase_date,
+                    co2: product.api_co2_result.CO2e
+                });
+                CATEGORY_PIE.push({
+                    category: category,
+                    co2: product.api_co2_result.CO2e
+                });
+                PURCHASE_HISTORY.push({
+                    name: product.product_name,
+                    date: product.purchase_date,
+                    co2: product.api_co2_result.CO2e
+                });
+            }            
+        });
+    });
+}
