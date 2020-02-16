@@ -96,7 +96,6 @@
 "use strict";
 
 
-<<<<<<< HEAD
 const API_GOOGLE_NLP = "https://language.googleapis.com/v1beta2/documents:classifyText?key=AIzaSyCi6QuyfyYaU0N6kpN_A5OcmqIZ3uEB5cg";
 const API_LOCAL_CO2E = "http://localhost/OneDrive/Programming/TH2020/co2e.php";
 
@@ -215,24 +214,6 @@ function checkURLchange(currentURL){
 }
 checkURLchange();
 
-=======
-// Content script file will run in the context of web page.
-// With content script you can manipulate the web pages using
-// Document Object Model (DOM).
-// You can also pass information to the parent extension.
-
-// We execute this script by making an entry in manifest.json file
-// under `content_scripts` property
-
-// For more information on Content Scripts,
-// See https://developer.chrome.com/extensions/content_scripts
-
-// Log `title` of current active web page
-const pageTitle = document.head.getElementsByTagName('title')[0].innerHTML;
-console.log(
-  `Page title is: '${pageTitle}' - evaluated by Chrome extension's 'contentScript.js' file`
-);
->>>>>>> 6269d8b2c55c477b77a94aaad29ea4762563e38b
 
 // Communicate with background file by sending a message
 chrome.runtime.sendMessage(
