@@ -1,7 +1,7 @@
 /* normalize css starts here */
 @font-face {
-    font-family: Futura;
-    src: url("/public/Futura.ttf") format("truetype");
+    font-family: Futura-Bold;
+    src: url("Futura.ttf") format("truetype");
 }
 
 /* @font-face {
