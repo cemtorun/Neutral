@@ -1,163 +1,27 @@
 'use strict';
 
-import './popup.css';
-const AMAZON_DOMAIN = 'amazon.com';
-const AMAZON_PRODUCT = 'amazon.ca/gp/product/';
-const AMAZON_CART = 'amazon.com/gp/cart/view.html?ref_=nav_cart';
+chrome.tabs.getSelected(null, function (tab) {
+  const url = tab.url;
+  if ((url.includes("amazon.ca/") || url.includes("amazon.com/")) && !url.includes("/cart/")) {
 
-chrome.tabs.getSelected(null, function(tab) {
-    if (tab.url.includes('amazon.com')) {
-      if (tab.url.includes(AMAZON_PRODUCT)) {
-        // TODO: Handle duplicates?
-        tab.do
-        var product = createAmazonProduct();
+    // Find product ASIN
+    if (!url || url.split("/").length <= 5)
+      return;
+    const url_info = url.split("/");
+    const product_id = url_info[5];
 
+    chrome.storage.local.get('amazon_product_info', function (result) {
+      const cur_prod = result.amazon_product_info.filter((p) => p.product_id == product_id)[0];
+
+      const popupPage = location.href;
+      if (popupPage.includes("product")) {
+        document.getElementById("name").innerHTML = cur_prod.product_name;
+        document.getElementById("category").innerHTML = cur_prod.api_category;
       }
-      // EAMAZON CART: If empty cart or user is not viewing the cart webpage
-      else if (tab.url.includes('amazon.com/gp/cart/view.html?ref_=nav_cart')) {
-        var itemsList = document.querySelector('.sc-list-item-content');
-        if (itemsList != null) {
-          document.querySelector('.analytics_cont').classList.add('hidden');
-          document.getElementById('emptyCart').setAttribute('hidden', '');
-          // document.querySelector('.shopping-list').classList.remove('hidden');
-          // TODO: MATCH CART TO PRODS VIEWED
-        }
-      } else {
-        document.getElementById('emptyCart').removeAttribute('hidden');
+      if (popupPage.includes("details")) {
+        document.getElementById("name").innerHTML = cur_prod.product_name;
+        document.getElementById("co2e").innerHTML = cur_prod.api_co2_result.CO2e;
       }
-    }
+    });
+  }
 });
-function createAmazonProduct(id, title, description) {
-  console.log(`Creating Amazon Product: '${title}' - in popup.js`)
-  var amazonProduct = {
-    id: id,
-    title: title,
-    description: description
-  };
-
-  return amazonProduct;
-}
-
-(function() {
-  // We will make use of Storage API to get and store `count` value
-  // More information on Storage API can we found at
-  // https://developer.chrome.com/extensions/storage
-
-  // To get storage access, we have to mention it in `permissions` property of manifest.json file
-  // More information on Permissions can we found at
-  // https://developer.chrome.com/extensions/declare_permissions
-  // getters and setters for storage
-
-  // const productStorage = {
-  //   get: cb => {
-  //     chrome.storage.sync.get(['prducts_viewed'], result => {
-  //       cb(result.products_viewed);
-  //     });
-  //   },
-  //   set: (key, value, cb) => {
-  //     chrome.storage.sync.set(
-  //       {
-  //         products_viewed: value,
-  //       },
-  //       () => {
-  //         cb();
-  //       }
-  //     );
-  //   },
-  //   add: (value) => {
-  //     chrome.storage.sync.ad
-  //   }
-  // };
-
-  function setupItemsCart(initialItems = []) {
-    setupItemsDisplay(initialItems);
-    for (var i = 0; i < itemsList.length; i++) {
-    itemsList[i].addEventListener('click', function(event) {
-        if (!confirm("sure u want to delete " + this.title)) {
-            event.preventDefault();
-        }
-    });
-}
-    document.getElementById('incrementBtn').addEventListener('click', () => {
-      updateCounter({
-        type: 'INCREMENT',
-      });
-    });
-
-    document.getElementById('decrementBtn').addEventListener('click', () => {
-      updateCounter({
-        type: 'DECREMENT',
-      });
-    });
-  }
-
-  function setupItemsDisplay() {
-
-  }
-
-  function updateCounter({ type }) {
-    counterStorage.get(count => {
-      let newCount;
-
-      if (type === 'INCREMENT') {
-        newCount = count + 1;
-      } else if (type === 'DECREMENT') {
-        newCount = count - 1;
-      } else {
-        newCount = count;
-      }
-
-      counterStorage.set(newCount, () => {
-        document.getElementById('counter').innerHTML = newCount;
-
-        // Communicate with content script of
-        // active tab by sending a message
-        chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-          const tab = tabs[0];
-
-          chrome.tabs.sendMessage(
-            tab.id,
-            {
-              type: 'COUNT',
-              payload: {
-                count: newCount,
-              },
-            },
-            response => {
-              console.log('Current count value passed to contentScript file');
-            }
-          );
-        });
-      });
-    });
-  }
-
-  function restoreCounter() {
-    // Restore count value
-    counterStorage.get(count => {
-      if (typeof count === 'undefined') {
-        // Set counter value as 0
-        counterStorage.set(0, () => {
-          setupCounter(0);
-        });
-      } else {
-        setupCounter(count);
-      }
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', restoreCounter);
-
-  // Communicate with background file by sending a message
-  chrome.runtime.sendMessage(
-    {
-      type: 'GREETINGS',
-      payload: {
-        message: 'Hello, my name is Pop. I am from Popup.',
-      },
-    },
-    response => {
-      console.log(response.message);
-    }
-  );
-})();

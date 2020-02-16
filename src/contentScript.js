@@ -1,8 +1,12 @@
 'use strict';
 
 const API_GOOGLE_NLP = "https://language.googleapis.com/v1beta2/documents:classifyText?key=AIzaSyCi6QuyfyYaU0N6kpN_A5OcmqIZ3uEB5cg";
-const API_LOCAL_CO2E = "https://c19f391b.ngrok.io/OneDrive/Programming/TH2020/co2e.php";
+const API_LOCAL_CO2E = "https://e8d8e350.ngrok.io/OneDrive/Programming/TH2020/co2e.php";
 
+/* ALL PAGE FUNCTIONS */
+function runPage() {
+  setTimeout(amazon_product_information_collection, 2500);
+}
 
 /* AMAZON BACKGROUND INFORMATION COLLECTION */
 function amazon_product_information_collection() {
@@ -21,27 +25,40 @@ function amazon_product_information_collection() {
     }
 
     // Find product ASIN
+    if (!url || url.split("/").length <= 5)
+      return;
     const url_info = url.split("/");
     data.product_id = url_info[5];
 
     // Find product Title
+    if (!document.getElementById("productTitle"))
+      return;
     const product = document.getElementById("productTitle").innerHTML.trim();
     data.product_name = product;
 
     // Find product description
-    const descs = document.getElementById("feature-bullets").children[0].children;
     let desc = "";
     let apiInput;
-    for (let i = 0; i < descs.length; i++) {
-      if (descs[i] && descs[i].children && descs[i].children[0])
-        if (!descs[i].children[0].innerHTML.includes("<"))
-          desc += descs[i].children[0].innerHTML.trim() + ". ";
+    if (document.getElementById("feature-bullets") &&
+        document.getElementById("feature-bullets").children && 
+        document.getElementById("feature-bullets").children[0] && 
+        document.getElementById("feature-bullets").children[0].children) {
+      const descs = document.getElementById("feature-bullets").children[0].children;
+      for (let i = 0; i < descs.length; i++) {
+        if (descs[i] && descs[i].children && descs[i].children[0])
+          if (!descs[i].children[0].innerHTML.includes("<"))
+            desc += descs[i].children[0].innerHTML.trim() + ". ";
+      }
     }
     data.product_desc = desc;
     apiInput = product + ". " + desc;
 
     // Find product price
-    const price_data = document.getElementById("priceblock_ourprice") || document.getElementById("priceblock_saleprice") || document.getElementById("priceblock_dealprice");
+    const price_data = document.getElementById("priceblock_ourprice") || 
+                       document.getElementById("priceblock_saleprice") || 
+                       document.getElementById("priceblock_dealprice");
+    if (!price_data)
+      return;
     const price = price_data.innerHTML.replace("$", "").replace("CDN", "").replace("&nbsp;", "").trim();
     data.price = price;
 
@@ -60,8 +77,12 @@ function amazon_product_information_collection() {
     let classification = JSON.parse(xhttp1.responseText);
     data.api_classification = classification;
 
-    // USE THIS CATEGORY
-    let category = classification.categories[0].name;
+    // Find Category
+    let category;
+    if (!classification || !classification.categories || !classification.categories[0])
+      category = "OTHER";
+    else
+      category = classification.categories[0].name;
     data.api_category = category;
 
     // Get CO2e information
@@ -77,47 +98,33 @@ function amazon_product_information_collection() {
     // Store in chrome
     let currData = [];
     chrome.storage.local.get('amazon_product_info', function(result) {
-      if (!!result) {
-        currData = result;
-      } else {
-        chrome.storage.local.set({amazon_product_info: []}, function() {
-          console.log("Local storage initialized");
-        });
+      console.log(result);
+      if (result && result.amazon_product_info) {
+        currData = result.amazon_product_info;
       }
+
+      let newData = currData.filter((product) => product.product_id != data.product_id);
+      newData.push(data);
+        
+      chrome.storage.local.set({amazon_product_info: newData}, function() {
+        console.log(newData);
+      });
     });
-  
-    let contains = false;
-    currData.forEach((product) => {
-      if (product.product_id == data.product_id) {
-        product = data;
-        contains = true;
-      }
-    });
-    if (!contains)
-      currData.push(data);
-    chrome.storage.local.set({amazon_product_info: currData}, function() {
-      console.log(currData);
-    });
-    console.log(data);
   }
 }
-setTimeout(amazon_product_information_collection, 2500);
 
+/* URL CHANGE DETECTOR */
 var oldURL = "";
-var currentURL = window.location.href;
-function checkURLchange(currentURL){
-    if(currentURL != oldURL){
-        setTimeout(amazon_product_information_collection, 2500);
-        oldURL = currentURL;
+function checkURLchange(){
+    if(window.location.href != oldURL){
+        runPage();
     }
-
     oldURL = window.location.href;
-    setTimeout(function() {
-        checkURLchange(window.location.href);
-    }, 1000);
 }
-checkURLchange();
+setInterval(checkURLchange, 1001);
 
+/* RUN BACKGROUND SCRIPT */
+runPage();
 
 // Communicate with background file by sending a message
 chrome.runtime.sendMessage(
