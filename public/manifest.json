@@ -23,7 +23,7 @@
   },
   "browser_action": {
     "default_title": "Carbon",
-    "default_popup": "popup.html"
+    "default_popup": "product.html"
   },
   "content_scripts": [
     {
