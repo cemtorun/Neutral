@@ -1,0 +1,131 @@
+/* normalize css starts here */
+
+@font-face {
+    font-family: Futura;
+    src: url("/public/Futura.ttf") format("truetype");
+}
+
+.black-text {
+    color: black;
+    display: inline-block;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #9BA2B6;
+    font-family: Futura;
+}
+
+.nav-bar {
+    background-color: white;
+    min-height: 64px;
+}
+
+.grey-bg {
+    background-color: #F1F3F9;
+    min-height: 100vh;
+}
+
+.title-text {
+    margin: 16px;
+}
+
+.top-tab {
+    background-color: #9BA2B6;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    padding: 4px;
+    margin-left: -8px;
+    margin-top: -52px;
+    margin-block-end: 0px;
+    text-align: center;
+    width: 100px;
+}
+
+.left-tab {
+    background-color: #9BA2B6;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    text-align: center;
+    padding: 4px 8px;
+    margin-left: -59px;
+    top: 26px;
+    max-width: 60px;
+    transform: rotate(-90deg);
+    position: absolute;
+}
+
+.left-tab h4 {
+    color: white !important;
+    font-size: 16px;
+    margin: 0 0;
+}
+
+.top-tab h4 {
+    color: white !important;
+    font-size: 16px;
+    margin: 0 0;
+}
+
+.card {
+    background-color: white;
+    min-height: 340px;
+    margin: 16px;
+    padding: 24px;
+    padding-bottom: 32px;
+}
+
+.card h2 {
+    margin-top: 64px;
+    font-size: 16px;
+}
+
+.card>.emoji {
+    font-size: 64px;
+}
+
+.card button {
+    background-color: white;
+    border: 1px solid #9BA2B6;
+    border-radius: 20px;
+    max-width: 100px;
+}
+
+button>p {
+    font-size: 12px;
+    padding: 8px;
+    margin-bottom: 0;
+}
+
+.card>.after-emoji {
+    margin-top: 0px;
+    font-size: 26px;
+}
+
+.top-padding {
+    padding-top: 32px;
+}
+
+.top-margin {
+    margin-top: 48px;
+}
+
+@media screen and (min-width: 992px) {
+    .col-lg-8.card {
+        flex: 0 0 66.666667%;
+        max-width: calc(66.666667% - 32px);
+    }
+    .col-lg-4.card {
+        flex: 0 0 33.333333%;
+        max-width: calc(33.333333% - 32px);
+    }
+}
