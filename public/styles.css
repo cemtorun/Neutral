@@ -97,12 +97,23 @@ hr.gray {
     min-height: 64px;
 }
 
+.logo {
+    max-width: 100px;
+    margin-top: -90px;
+}
+
+.profile {
+    max-width: 40px;
+    margin-top: -54px;
+}
+
 .grey-bg {
     background-color: #F1F3F9;
     min-height: 100vh;
 }
 
 .title-text {
+    margin-top: 32px;
     margin: 16px;
 }
 

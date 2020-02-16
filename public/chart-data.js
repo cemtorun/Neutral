@@ -1,11 +1,3 @@
-function init2() {
-    carbon();
-}
-
-document.addEventListener('DOMContentLoaded', init2, false);
-
-
-
 document.getElementById("type-co2").addEventListener("click", carbon);
 document.getElementById("type-energy").addEventListener("click", energy);
 document.getElementById("type-water").addEventListener("click", water);
@@ -14,11 +6,24 @@ var selected = "carbon";
 var colour;
 var bgColour;
 var graphLabel;
+var chartData = [];
+var chartDates = [];
 
 function carbon() {
     colour = "rgb(121,200,166)";
     bgColour = "rgb(121,200,166,0.5)";
     graphLabel = "Carbon Usage";
+    chartData = [];
+    chartDates = [];
+    for (var i = 0; i < CO2_TREND.length; i++) {
+        console.log(CO2_TREND)
+
+        chartData.push(CO2_TREND[i].co2);
+        chartDates.push(CO2_TREND[i].date);
+        historicalKG += CO2_TREND[i].co2;
+
+    }
+
     drawGraph();
 }
 
@@ -42,10 +47,10 @@ function drawGraph() {
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: chartDates,
             datasets: [{
-                label: graphLabel,
-                data: [12, 19, 3, 5, 2, 3],
+                label: chartDates,
+                data: chartData,
                 backgroundColor: bgColour,
                 borderColor: colour,
                 borderWidth: 1
