@@ -56,6 +56,12 @@ a {
   color: #464C5E;
 }
 
+hr {
+  /* margin-top:  */
+  border: 0.7px solid #E6E9F2;
+  margin: 12.5px -60px 22px -60px;
+}
+
 .report {
   height: 100%;
   width: 100%;
@@ -70,7 +76,6 @@ a {
   font-size: 23px;
   font-weight: 600;
   margin-top: 5px;
-  margin-bottom: 25px;
 }
 
 .merchant {
@@ -182,5 +187,6 @@ a {
     margin: 30px auto 25px;
     width: 50px;
     border: .5px dashed #000;
+    color: #E6E9F2;
     opacity: .1;
 }
