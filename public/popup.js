@@ -132,22 +132,6 @@ function createAmazonProduct(id, title, description) {
     });
   }
 
-  function restoreCounter() {
-    // Restore count value
-    counterStorage.get(count => {
-      if (typeof count === 'undefined') {
-        // Set counter value as 0
-        counterStorage.set(0, () => {
-          setupCounter(0);
-        });
-      } else {
-        setupCounter(count);
-      }
-    });
-  }
-
-  document.addEventListener('DOMContentLoaded', restoreCounter);
-
   // Communicate with background file by sending a message
   chrome.runtime.sendMessage(
     {
