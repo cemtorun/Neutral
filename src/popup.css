@@ -28,13 +28,13 @@ html {
 h1 {
   font-family: Futura;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 23px;
 }
 
 h2 {
   font-family: Futura;
   font-weight: bold;
-  font-size: 17px;
+  font-size: 18px;
   color: #9BA2B6;
   letter-spacing: -0.5px;
 }
@@ -51,6 +51,11 @@ body {
   height: 450px;
 }
 
+a {
+  font-weight: bold;
+  color: #464C5E;
+}
+
 .report {
   height: 100%;
   width: 100%;
@@ -62,10 +67,10 @@ body {
 }
 
 .title {
-    font-size: 20px;
-    font-weight: 600;
-    margin-top: 10px;
-    margin-bottom: 30px;
+  font-size: 23px;
+  font-weight: 600;
+  margin-top: 5px;
+  margin-bottom: 25px;
 }
 
 .merchant {
@@ -82,6 +87,7 @@ body {
 .subtitle {
   font-family: Futura;
   font-size: 13px;
+  height: 17px;
   color: #000000;
   letter-spacing: -0.25px;
 }
@@ -89,30 +95,24 @@ body {
 .statistic {
   font-family: Futura;
   font-weight: bold;
-  font-size: 27px;
+  font-size: 30px;
   color: #9BA2B6;
   margin-top: 5px;
+  display: inherit;
 }
 
 .description {
   font-family: Futura;
   font-weight: lighter;
-  font-size: 13px;
-  /* margin-bottom: 30px; */
   color: #9BA2B6;
+  font-size: 14px;
 }
+
 
 .product {
   margin-bottom: 15px;
   width: 70%;
 }
-/* code {
-    font-size: 12px;
-    font-family: inherit;
-    background-color: rgba(254, 237, 185, .3);
-    padding: 2px 4px;
-    border-radius: 2px;
-} */
 
 .button-container {
     margin-top: 15px;
@@ -122,6 +122,7 @@ body {
     border: 0;
     display: inline-block;
     padding: 7px 15px;
+    margin-bottom: 6px;
     margin-right: 4px;
     font-size: 16px;
     cursor: pointer;
@@ -135,6 +136,38 @@ body {
     color: #FFFFFF;
     letter-spacing: -0.53px;
     text-align: center;
+}
+
+.consumption {
+  display: inline;
+}
+
+.donate {
+  text-align: center;
+}
+
+.donate-description {
+  margin-bottom: 20px;
+  font-family: Futura;
+  font-weight: lighter;
+  color: #9BA2B6;
+  font-size: 13px;
+}
+
+.donate-data-container {
+  width: 100%;
+  display: flex;
+  justify-items: center;
+  margin-bottom: 5px;
+}
+
+.donate-data {
+  justify-items: center;
+  width: 50%;
+}
+
+.donate-logos {
+  margin-top: 20px;
 }
 
 .button:focus {
