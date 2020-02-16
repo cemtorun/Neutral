@@ -1,7 +1,7 @@
 'use strict';
 
 const API_GOOGLE_NLP = "https://language.googleapis.com/v1beta2/documents:classifyText?key=AIzaSyCi6QuyfyYaU0N6kpN_A5OcmqIZ3uEB5cg";
-const API_LOCAL_CO2E = "https://c19f391b.ngrok.io/OneDrive/Programming/TH2020/co2e.php";
+const API_LOCAL_CO2E = "https://e8d8e350.ngrok.io/OneDrive/Programming/TH2020/co2e.php";
 
 /* ALL PAGE FUNCTIONS */
 function runPage() {
