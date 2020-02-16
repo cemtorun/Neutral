@@ -9,6 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="data.js"></script>
     <title>neutral</title>
 </head>
 
@@ -23,26 +24,106 @@
                 <h1>
                     <div class="title-text">
                         You’ve emmited
-                        <div class="black-text">6.39 tonnes</div> of CO2 this year, <br>
-                        <div class="black-text"> 2%</div>
-                        more than the average Canadian shopper
+                        <div class="black-text">
+                            <div class="totalEmissions inline"></div> tons
+                        </div> of CO<sub>2</sub> this year from online shopping,
+                        <div class="black-text">
+                            <div class="nationalAverageCompare inline"></div>%
+                        </div> more than the avg. Canadian
                     </div>
                 </h1>
                 <div class="col-lg-8 card">
                     <div class="left-tab">
-                        <h4>CO2</h4>
+                        <button><h4>CO<sub>2</sub></h4></button>
                     </div>
+                    <div class="left-tab shift-16">
+                        <button><h4>Energy</h4></button>
+                    </div>
+                    <div class="left-tab shift-32">
+                        <button><h4>Water</h4></button>
+                    </div>
+                    <h2 class="card-h2">
+                        <div class="febEmittions inline"></div> tons emitted in February</h2>
                     <canvas id="co2-chart" width="400" height="250"></canvas>
 
                 </div>
                 <div class="col-lg-4 card">
+                    <h2 class="card-h2 inline">The same as
+                        <div class="whales inline"></div> in C0<sub>2</sub></h2>
+                    <img class="data-visual" id="dataVisual" src="whale.png">
+                    <div class="data-buttons">
+                        <button class="emoji-button" id="changeWhale">🐋</button>
+                        <button class="emoji-button" id="changeTree">🌴</button>
+                        <button class="emoji-button" id="changePizza">🍕</button>
+                        <button class="emoji-button" id="changeWater">🌊</button>
+                    </div>
+                    <div class="small-text-r right">
+                        <p>Edit visual</p>
+                    </div>
 
                 </div>
+                <!--First Bar-->
+                <div class="col-lg-12">
+                    <div class="outside-text">
+                        <h2 class="outside-header">
+                            <div class="black-text">Emitted</div>
+                            <div class="totalEmissions2 inline"></div> tons</h2>
+                        <div class="small-text-r">
+                            <p>Edit personal limit</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="progress">
+                        <div class="progress-bar" id="p-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="small-text-l">
+                        <p>0 tons</p>
+                    </div>
+                    <div class="small-text-r">
+                        <p>
+                            <div class="goalTonnes inline"></div> tons</p>
+                    </div>
+
+                </div>
+
+                <!--Categories Cared-->
                 <div class="col-lg-4 card">
+                    <h2 class="card-h2">Mostly from Home & Garden</h2>
                     <canvas id="category-chart" width="200" height="250"></canvas>
                 </div>
+
+                <!--Past History Card-->
                 <div class="col-lg-8 card">
-                    <canvas id="co2-chart" width="400" height="250"></canvas>
+                    <h2 class="card-h2">Recent contributions</h2>
+
+                    <div class="history-row">
+                        <hr class="gray">
+                        <p class="grid-item grid-name">Entry</p>
+                        <p class="grid-item grid-carbon">26 kg/CO2</p>
+                        <p class="grid-item grid-rating mid-rating">Med</p>
+                    </div>
+
+                    <div class="history-row">
+                        <hr class="gray">
+                        <p class="grid-item grid-name">DAODAO Teddy Bear</p>
+                        <p class="grid-item grid-carbon">26 kg/CO2</p>
+                        <p class="grid-item grid-rating low-rating">Low</p>
+                    </div>
+
+                    <div class="history-row">
+                        <hr class="gray">
+                        <p class="grid-item grid-name">DAODAO Teddy Bear</p>
+                        <p class="grid-item grid-carbon">26 kg/CO2</p>
+                        <p class="grid-item grid-rating high-rating">High</p>
+                    </div>
+
+                    <div class="history-row">
+                        <hr class="gray">
+                        <p class="grid-item grid-name">DAODAO Teddy Bear</p>
+                        <p class="grid-item grid-carbon">26 kg/CO2</p>
+                        <p class="grid-item grid-rating high-rating">High</p>
+                    </div>
 
                 </div>
 
@@ -70,9 +151,55 @@
                     </div>
                     <h2 class="emoji">🇺🇸</h2>
                     <h2 class="after-emoji">Shop Locally</h2>
-                    <p>Shipping overseas creates large amounts of CO2 through gas and transportation. </p>
+                    <p>Shipping overseas creates large amounts of CO<sub>2</sub> through gas and transportation. </p>
                     <button><p>Learn More</p></button>
                 </div>
+
+                <!--Second Bar-->
+                <div class="col-lg-12">
+                    <div class="outside-text">
+                        <h2 class="outside-header">
+                            <div class="black-text">Neutralized</div>
+                            <div class="donatedAmount2 inline"></div> tons</h2>
+                        <div class="small-text-r">
+                            <p>Edit personal limit</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="progress progress2">
+                        <div class="progress-bar" id="p-bar2" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div class="small-text-l">
+                        <p>0 tons</p>
+                    </div>
+                    <div class="small-text-r">
+                        <p>
+                            <div class="totalEmissions3 inline"></div> tons</p>
+                    </div>
+
+                </div>
+                <!-- Last Card-->
+                <div class="col-lg-12 card card-fit">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h2>Neutralized through</h2>
+                                <img class="charity-img" src="urban-forest-logo.png">
+                            </div>
+                            <div class="col-md-6 right">
+                                <h2 class="inline">🌴
+                                    <div class="treeNum inline">
+                                    </div> trees planted</h2>
+                                <h2 class="inline"> $
+                                    <div class="treeDollar inline"></div> donated</h2>
+                                <p>Friends of the Urban Forest helps individuals and neighborhood groups plant and care for street trees and sidewalk gardens in San Francisco. This "green infrastructure" improves the city by beautifying neighborhoods, cleaning
+                                    the air, and reducing polluted stormwater runoff. </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="footer-text"> © neutral | learn more | terms of service | faq | careers | contact us</p>
             </div>
 
         </div>
@@ -84,6 +211,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="Chart.bundle.min.js"></script>
         <script src="chart-data.js"></script>
+        <script src="data.js"></script>
 </body>
 
 </html>
