@@ -126,11 +126,7 @@ hr {
     transition: transform .2s ease;
     user-select: none;
     background: #464C5E;
-<<<<<<< HEAD
-    font-family: Futura-Bold;
-=======
     font-family: 'Futura-Bold';
->>>>>>> beca8107a5f0ebbd8c931fdc3e275200c8e97813
     font-size: 16px;
     color: #FFFFFF;
     letter-spacing: -0.53px;
