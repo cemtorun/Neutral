@@ -26,6 +26,7 @@
 #name {
   max-height: 205px;
   overflow: hidden;
+  color: #9BA2B6;
 }
 
 html {
@@ -85,8 +86,9 @@ hr {
   margin-top: 5px;
 }
 
-.merchant {
+p.merchant {
   margin-bottom: 20px;
+  color: #222;
 }
 /* .subtitle {
   font-family: Futura;
@@ -124,8 +126,6 @@ hr {
 .product {
   margin-bottom: 15px;
   width: 70%;
-  max-height: 250px;
-  overflow: hidden;
 }
 
 .button-container {

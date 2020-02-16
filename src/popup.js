@@ -12,8 +12,16 @@ chrome.tabs.getSelected(null, function (tab) {
 
     chrome.storage.local.get('amazon_product_info', function (result) {
       const cur_prod = result.amazon_product_info.filter((p) => p.product_id == product_id)[0];
-      document.getElementById("name").innerHTML = cur_prod.product_name;
-      document.getElementById("category").innerHTML = cur_prod.api_category;
+
+      const popupPage = location.href;
+      if (popupPage.includes("product")) {
+        document.getElementById("name").innerHTML = cur_prod.product_name;
+        document.getElementById("category").innerHTML = cur_prod.api_category;
+      }
+      if (popupPage.includes("details")) {
+        document.getElementById("name").innerHTML = cur_prod.product_name;
+        document.getElementById("co2e").innerHTML = cur_prod.api_co2_result.CO2e;
+      }
     });
   }
 });
