@@ -1,7 +1,5 @@
-'use strict';
-
 const API_GOOGLE_NLP = "https://language.googleapis.com/v1beta2/documents:classifyText?key=AIzaSyCi6QuyfyYaU0N6kpN_A5OcmqIZ3uEB5cg";
-const API_LOCAL_CO2E = "https://e8d8e350.ngrok.io/OneDrive/Programming/TH2020/co2e.php";
+const API_LOCAL_CO2E = "https://b433ddd7.ngrok.io/OneDrive/Programming/TH2020/co2e.php";
 
 /* ALL PAGE FUNCTIONS */
 function runPage() {
@@ -126,28 +124,3 @@ setInterval(checkURLchange, 1001);
 
 /* RUN BACKGROUND SCRIPT */
 runPage();
-
-// Communicate with background file by sending a message
-chrome.runtime.sendMessage(
-  {
-    type: 'GREETINGS',
-    payload: {
-      message: 'Hello, my name is Con. I am from ContentScript.',
-    },
-  },
-  response => {
-    console.log(response.message);
-  }
-);
-
-// Listen for message
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === 'ADD_ITEMS') {
-    console.log(`New items have been added to cart ${request.payload.items}`);
-  }
-
-  // Send an empty response
-  // See https://github.com/mozilla/webextension-polyfill/issues/130#issuecomment-531531890
-  sendResponse({});
-  return true;
-});

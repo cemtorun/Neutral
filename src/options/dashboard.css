@@ -1,0 +1,288 @@
+/* normalize css starts here */
+
+@font-face {
+    font-family: 'Futura';
+    src: url("../../fonts/Futura.ttf") format("truetype");
+}
+
+.black-text {
+    color: black;
+    display: inline-block;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+.outside-text {
+    margin-top: 32px;
+}
+
+.outside-header {
+    float: left;
+}
+
+.small-text-r {
+    float: right;
+    font-size: 12px;
+    padding: 4px;
+}
+
+.small-text-l {
+    float: left;
+    font-size: 12px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #9BA2B6;
+    font-family: Futura;
+}
+
+.inline {
+    display: inline-block;
+}
+
+hr.gray {
+    border-top: 1px solid #E6E9F2;
+}
+
+.grid-item {
+    display: inline-block;
+}
+
+.grid-name {
+    width: 200px;
+    margin-right: 17%;
+}
+
+.grid-carbon {
+    width: 100px;
+    margin-right: 10%;
+}
+
+.grid-rating {
+    width: 80px;
+    text-align: center;
+    color: white;
+    padding: 4px;
+}
+
+.high-rating {
+    background-color: #f16265;
+    border-radius: 20px;
+}
+
+.mid-rating {
+    background-color: #79c8a6;
+    border-radius: 20px;
+}
+
+.low-rating {
+    background-color: #ffc845;
+    border-radius: 20px;
+}
+
+.nav-bar {
+    background-color: white;
+    min-height: 64px;
+}
+
+.grey-bg {
+    background-color: #F1F3F9;
+    min-height: 100vh;
+}
+
+.title-text {
+    margin: 16px;
+}
+
+.top-tab {
+    background-color: #9BA2B6;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    padding: 4px;
+    margin-left: -8px;
+    margin-top: -52px;
+    margin-block-end: 0px;
+    text-align: center;
+    width: 100px;
+}
+
+.left-tab button {
+    background-color: #9BA2B6 !important;
+}
+
+.left-tab {
+    background-color: #9BA2B6;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    text-align: center;
+    padding: 4px 8px;
+    margin-left: -72px;
+    top: 26px;
+    max-width: 80px;
+    transform: rotate(-90deg);
+    position: absolute;
+}
+
+.shift-16 {
+    top: 105px;
+    margin-left: -80px;
+}
+
+.shift-32 {
+    top: 191px;
+    margin-left: -78px;
+}
+
+.left-tab h4 {
+    color: white !important;
+    font-size: 16px;
+    margin: 0 0;
+}
+
+.top-tab h4 {
+    color: white !important;
+    font-size: 16px;
+    margin: 0 0;
+}
+
+.data-buttons {
+    display: inline-block;
+    margin: auto;
+}
+
+.data-visual {
+    max-width: 200px;
+    max-height: 130px;
+    margin: auto;
+    margin-top: 48px;
+    padding-bottom: 16px;
+}
+
+.data-buttons>.emoji-button {
+    border: none;
+    font-size: 32px;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.progress {
+    height: 30px;
+    border-radius: 50px;
+    background-color: white;
+}
+
+.progress-bar {
+    background-color: #f16265;
+}
+
+.progress2 {
+    background-color: #f16265;
+}
+
+.progress2>.progress-bar {
+    background-color: #79c8a6 !important;
+}
+
+.bar {
+    max-height: 20px;
+    border-radius: 20px;
+    background-color: white;
+    margin: 16px;
+    padding: 24px;
+    padding-bottom: 32px;
+    max-width: calc(100% - 32px);
+}
+
+.card {
+    background-color: white;
+    min-height: 340px;
+    margin: 16px;
+    padding: 24px;
+    padding-bottom: 32px;
+}
+
+.card-fit {
+    max-width: calc(100% - 32px);
+    margin-bottom: 128px;
+    display: inline-block;
+}
+
+.card h2 {
+    margin-top: 64px;
+    font-size: 26px;
+}
+
+.card>.emoji {
+    font-size: 64px;
+}
+
+.card>.card-h2 {
+    margin-top: 16px;
+    font-size: 26px;
+    background-color: white;
+    border-bottom: none;
+}
+
+.card button {
+    background-color: white;
+    border: 1px solid #9BA2B6;
+    border-radius: 20px;
+    max-width: 100px;
+}
+
+button>p {
+    font-size: 12px;
+    padding: 8px;
+    margin-bottom: 0;
+}
+
+.card>.after-emoji {
+    margin-top: 0px;
+    font-size: 26px;
+}
+
+.top-padding {
+    padding-top: 32px;
+}
+
+.top-margin {
+    margin-top: 48px;
+}
+
+.charity-img {
+    max-width: 200px;
+}
+
+.footer-text {
+    margin: auto;
+    margin-bottom: 16px;
+}
+
+@media screen and (min-width: 992px) {
+    .col-lg-8.card {
+        flex: 0 0 66.666667%;
+        max-width: calc(66.666667% - 32px);
+    }
+    .col-lg-4.card {
+        flex: 0 0 33.333333%;
+        max-width: calc(33.333333% - 32px);
+    }
+}

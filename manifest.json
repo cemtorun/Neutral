@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Carbon",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Neutralize your carbon emissions",
   "icons": {
     "16": "icons/icon16.png",
@@ -10,28 +10,33 @@
     "128": "icons/icon128.png"
   },
   "permissions": [
-    "tabs",
     "activeTab",
+    "notifications",
     "declarativeContent",
-    "storage"
+    "storage",
+    "https://*/*"
   ],
   "background": {
     "scripts": [
-      "background.js"
+      "src/background/background.js"
     ],
     "persistent": false
   },
   "browser_action": {
     "default_title": "Carbon",
-    "default_popup": "product.html"
+    "default_popup": "src/popup/product.html"
   },
+  "options_page": "src/options/dashboard.html",
   "content_scripts": [
     {
       "matches": [
         "<all_urls>"
       ],
+      "css": [
+        "src/inject/contentScript.css"
+      ],
       "js": [
-        "contentScript.js"
+        "src/inject/contentScript.js"
       ]
     }
   ]
