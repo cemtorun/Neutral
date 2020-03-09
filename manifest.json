@@ -1,43 +1,51 @@
 {
-  "manifest_version": 2,
-  "name": "Carbon",
-  "version": "0.1.1",
-  "description": "Neutralize your carbon emissions",
-  "icons": {
-    "16": "icons/icon16.png",
-    "32": "icons/icon32.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
-  },
-  "permissions": [
-    "activeTab",
-    "notifications",
-    "declarativeContent",
-    "storage",
-    "https://*/*"
-  ],
-  "background": {
-    "scripts": [
-      "src/background/background.js"
+    "manifest_version": 2,
+    "name": "Carbon",
+    "version": "0.1.1",
+    "description": "Neutralize your carbon emissions",
+    "icons": {
+        "16": "icons/icon16.png",
+        "32": "icons/icon32.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "permissions": [
+        "tabs",
+        "notifications",
+        "declarativeContent",
+        "storage",
+        "https://*/*"
     ],
-    "persistent": false
-  },
-  "browser_action": {
-    "default_title": "Carbon",
-    "default_popup": "src/popup/product.html"
-  },
-  "options_page": "src/options/dashboard.html",
-  "content_scripts": [
-    {
-      "matches": [
-        "<all_urls>"
-      ],
-      "css": [
-        "src/inject/contentScript.css"
-      ],
-      "js": [
-        "src/inject/contentScript.js"
-      ]
-    }
-  ]
+    "background": {
+        "scripts": [
+            "src/global.js",
+            "src/AbstractWebsiteHandler.js",
+            "src/background/Initializer.js",
+            "src/background/PopupSwitcher.js",
+            "src/background/BackgroundMessage.js",
+            "src/background/background.js"
+        ],
+        "persistent": false
+    },
+    "browser_action": {
+        "default_title": "Carbon",
+        "default_popup": "src/popup/html/default.html"
+    },
+    "options_page": "src/options/dashboard.html",
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "css": [
+                "src/inject/contentScript.css"
+            ],
+            "js": [
+                "src/global.js",
+                "src/AbstractWebsiteHandler.js",
+                "src/inject/CollectionFrontend.js",
+                "src/inject/contentScript.js"
+            ]
+        }
+    ]
 }

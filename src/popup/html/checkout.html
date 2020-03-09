@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neutral</title>
+    <link rel="stylesheet" href="popup.css" />
+</head>
+
+<body>
+    <div class="report">
+        <h2>neutral</h2>
+        <h1 class="title">CO<sub>2</sub> Impact Report</h1>
+        <hr />
+
+        <p class="description merchant">Purchasing items on Amazon.ca</p>
+        <div class="merchant">
+            <p class="subtitle">CO<sub>2</sub> Consumption</p>
+            <p id="co2e" class="consumption statistic">759</p>
+            <p class="consumption description">kilograms</p>
+        </div>
+
+        <div class="product">
+            <p class="subtitle">Water Usage</p>
+            <p id="co2e_water" class="consumption statistic">385</p>
+            <p class="consumption description">liters</p>
+        </div>
+
+        <div class="button-container">
+            <form action="donate.html">
+                <input id="gotoDashboard" class="button" type="submit" value="Neutralize">
+            </form>
+        </div>
+        <a href="">See More</a>
+    </div>
+
+    <script src="../../global.js"></script>
+    <script src="../../AbstractWebsiteHandler.js"></script>
+    <script src="../PopupHandler.js"></script>
+    <script src="../popup.js"></script>
+</body>
+</html>
