@@ -3,8 +3,14 @@ class PopupSwitcher extends AbstractWebsiteHandler {
         super();
     }
 
-    Listener = (tabId, changeInfo, tab) => {
-        this.RunForURL(tab.url);
+    OnUpdated = (tabId, changeInfo, tab) => {
+        // This runs when any tab Update happens on any tab
+        this.RunForCurrentTab();
+    }
+
+    OnActivated = (activeInfo) => {
+        // This runs when the selected tab changes
+        this.RunForCurrentTab();
     }
 
     RunAmazonProductPage = (url) => {

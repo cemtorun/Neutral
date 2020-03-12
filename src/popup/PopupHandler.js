@@ -3,11 +3,6 @@ class PopupHandler extends AbstractWebsiteHandler {
         super();
     }
 
-    Listener = (tab) => {
-        const url = tab[0].url;
-        this.RunForURL(url);
-    }
-
     RunAmazonProductPage = (url) => {
         // FIND ASIN
         const product_id = findASINfromURL(url);

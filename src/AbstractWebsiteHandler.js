@@ -3,6 +3,17 @@ class AbstractWebsiteHandler {
 
     }
 
+    RunForCurrentTab = () => {
+        chrome.tabs.query({active: true, currentWindow: true}, this.ActiveTabQuery);
+    }
+
+    ActiveTabQuery = (tabs) => {
+        var currTab = tabs[0];
+        if (currTab) {
+            this.RunForURL(currTab.url);
+        }
+    }
+
     RunForURL = (url) => {
         if (!!url) {
             if ((url.includes("amazon.ca/") || url.includes("amazon.com/")) && !url.includes("/cart/")) {
