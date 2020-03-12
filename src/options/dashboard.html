@@ -13,9 +13,6 @@
 </head>
 
 <body>
-    <div class="nav-bar">
-
-    </div>
     <div class="grey-bg">
 
         <div class="container">
@@ -24,25 +21,32 @@
                     <div class="title-text">
                         You’ve emmited
                         <div class="black-text">
-                            <div class="totalEmissions inline"></div> tons
-                        </div> of CO<sub>2</sub> this year from online shopping,
-                        <div class="black-text">
+                            <div class="totalEmissions inline"></div> kg
+                        </div> of CO<sub>2</sub> so far from online shopping.
+                        <!-- <div class="black-text">
                             <div class="nationalAverageCompare inline"></div>%
-                        </div> more than the avg. Canadian
+                        </div> more than the global average. -->
                     </div>
                 </h1>
                 <div class="col-lg-8 card">
                     <div class="left-tab">
-                        <button id="type-co2"><h4>CO<sub>2</sub></h4></button>
+                        <button id="type-co2">
+                            <h4>CO<sub>2</sub></h4>
+                        </button>
                     </div>
                     <div class="left-tab shift-16">
-                        <button id="type-energy"><h4>Energy</h4></button>
+                        <button id="type-energy">
+                            <h4>Energy</h4>
+                        </button>
                     </div>
                     <div class="left-tab shift-32">
-                        <button id="type-water"><h4>Water</h4></button>
+                        <button id="type-water">
+                            <h4>Water</h4>
+                        </button>
                     </div>
                     <h2 class="card-h2">
-                        <div class="febEmittions inline"></div> tons emitted in February</h2>
+                        <div class="febEmittions inline"></div>Your Historical Data
+                    </h2>
                     <canvas id="co2-chart" width="400" height="250"></canvas>
 
                 </div>
@@ -56,13 +60,13 @@
                         <button class="emoji-button" id="changePizza">🍕</button>
                         <button class="emoji-button" id="changeWater">🌊</button>
                     </div>
-                    <div class="small-text-r right">
+                    <!-- <div class="small-text-r right">
                         <p>Edit visual</p>
-                    </div>
+                    </div> -->
 
                 </div>
                 <!--First Bar-->
-                <div class="col-lg-12">
+                <!--div class="col-lg-12">
                     <div class="outside-text">
                         <h2 class="outside-header">
                             <div class="black-text">Emitted</div>
@@ -84,44 +88,46 @@
                             <div class="goalTonnes inline"></div> tons</p>
                     </div>
 
-                </div>
+                </div-->
 
                 <!--Categories Cared-->
                 <div class="col-lg-4 card">
-                    <h2 class="card-h2">Mostly from Home & Garden</h2>
+                    <h2 class="card-h2">Mostly from ...</h2>
+                    <h6 style="margin-top: 50px;"><i>Development In-Progress</i></h6>
+                    <h6 style=""><b>Pie-chart goes here</b></h6>
                     <canvas id="category-chart" width="200" height="250"></canvas>
                 </div>
 
                 <!--Past History Card-->
-                <div class="col-lg-8 card">
+                <div class="history col-lg-8 card">
                     <h2 class="card-h2">Recent contributions</h2>
 
                     <div class="history-row">
                         <hr class="gray">
-                        <p class="grid-item grid-name">Entry</p>
-                        <p class="grid-item grid-carbon">26 kg/CO2</p>
-                        <p class="grid-item grid-rating mid-rating">Med</p>
+                        <p class="grid-item grid-name"></p>
+                        <p class="grid-item grid-carbon"></p>
+                        <!-- <p class="grid-item grid-rating mid-rating">Med</p> -->
                     </div>
 
                     <div class="history-row">
                         <hr class="gray">
-                        <p class="grid-item grid-name">DAODAO Teddy Bear</p>
-                        <p class="grid-item grid-carbon">26 kg/CO2</p>
-                        <p class="grid-item grid-rating low-rating">Low</p>
+                        <p class="grid-item grid-name"></p>
+                        <p class="grid-item grid-carbon"></p>
+                        <!-- <p class="grid-item grid-rating low-rating">Low</p> -->
                     </div>
 
                     <div class="history-row">
                         <hr class="gray">
-                        <p class="grid-item grid-name">DAODAO Teddy Bear</p>
-                        <p class="grid-item grid-carbon">26 kg/CO2</p>
-                        <p class="grid-item grid-rating high-rating">High</p>
+                        <p class="grid-item grid-name"></p>
+                        <p class="grid-item grid-carbon"></p>
+                        <!-- <p class="grid-item grid-rating high-rating">High</p> -->
                     </div>
 
                     <div class="history-row">
                         <hr class="gray">
-                        <p class="grid-item grid-name">DAODAO Teddy Bear</p>
-                        <p class="grid-item grid-carbon">26 kg/CO2</p>
-                        <p class="grid-item grid-rating high-rating">High</p>
+                        <p class="grid-item grid-name"></p>
+                        <p class="grid-item grid-carbon"></p>
+                        <!-- <p class="grid-item grid-rating high-rating">High</p> -->
                     </div>
 
                 </div>
@@ -133,7 +139,9 @@
                     <h2 class="emoji">🛒</h2>
                     <h2 class="after-emoji">Reduce online shopping</h2>
                     <p>Reduce and downsize what you purchase, opt to be mindful of what you really need.</p>
-                    <button><p>Learn More</p></button>
+                    <button>
+                        <p>Learn More</p>
+                    </button>
                 </div>
                 <div class="col-lg-4 card top-margin">
                     <div class="top-tab">
@@ -142,7 +150,9 @@
                     <h2 class="emoji">👯</h2>
                     <h2 class="after-emoji">Browse with friends</h2>
                     <p>Buy products together with friends to cut down on shipping costs.</p>
-                    <button><p>Learn More</p></button>
+                    <button>
+                        <p>Learn More</p>
+                    </button>
                 </div>
                 <div class="col-lg-4 card top-margin">
                     <div class="top-tab">
@@ -151,11 +161,13 @@
                     <h2 class="emoji">🇺🇸</h2>
                     <h2 class="after-emoji">Shop Locally</h2>
                     <p>Shipping overseas creates large amounts of CO<sub>2</sub> through gas and transportation. </p>
-                    <button><p>Learn More</p></button>
+                    <button>
+                        <p>Learn More</p>
+                    </button>
                 </div>
 
                 <!--Second Bar-->
-                <div class="col-lg-12">
+                <!--div class="col-lg-12">
                     <div class="outside-text">
                         <h2 class="outside-header">
                             <div class="black-text">Neutralized</div>
@@ -177,9 +189,9 @@
                             <div class="totalEmissions3 inline"></div> tons</p>
                     </div>
 
-                </div>
+                </div-->
                 <!-- Last Card-->
-                <div class="col-lg-12 card card-fit">
+                <!--div class="col-lg-12 card card-fit">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6">
@@ -197,7 +209,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div-->
+
                 <p class="footer-text"> © neutral | learn more | terms of service | faq | careers | contact us</p>
             </div>
 
@@ -205,6 +218,7 @@
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="../global.js"></script>
         <script src="../../includes/jquery-3.3.1.slim.min.js"></script>
         <script src="../../includes/popper.min.js"></script>
         <script src="../../includes/bootstrap.min.js"></script>
