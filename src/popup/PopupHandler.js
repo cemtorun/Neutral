@@ -84,7 +84,7 @@ class PopupHandler extends AbstractWebsiteHandler {
             if (document.getElementById("co2e_water"))
           document.getElementById("co2e_water").innerHTML = _L(co2_water);
           if (document.getElementById("donate-value"))
-          document.getElementById("donate-value").innerHTML = _$(co2_total * 0.04545454545);
+          document.getElementById("donate-value").innerHTML = "$" +  _$(co2_total * 0.04545454545);
           if (document.getElementsByClassName("donate-button")[0])
           document.getElementsByClassName("donate-button")[0].value = "Donate $" + _$(co2_total * 0.04545454545);
         });
