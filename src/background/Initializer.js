@@ -1047,4 +1047,15 @@ class Initializer {
             `);
         });
     }
+
+    OnStartup = () => {
+        // Ping Harry's Dev server for API KEY/URL for Google NLP
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("GET", API_KEY_BACKEND_URL, false);
+        xhttp.send();
+        const API_URL = xhttp.responseText;
+
+        // Store in user's local extension storage
+        chrome.storage.local.set({API_GOOGLE_NLP: API_URL}, null);
+    }
 }

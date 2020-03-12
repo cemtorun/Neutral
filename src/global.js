@@ -1,4 +1,4 @@
-const API_GOOGLE_NLP = "https://language.googleapis.com/v1beta2/documents:classifyText?key=AIzaSyCi6QuyfyYaU0N6kpN_A5OcmqIZ3uEB5cg";
+const API_KEY_BACKEND_URL = "https://zharry.ca/dev/Neutral/api_key.php";
 
 const DB = {
     name: "neutral_db",

@@ -53,31 +53,6 @@ class CollectionFrontend extends AbstractWebsiteHandler {
         const PRICE = PRICE_DATA.innerHTML.replace("$", "").replace("CDN", "").replace("&nbsp;", "").trim();
         data.price = PRICE;
 
-        // FORM GCP CLASSIFICATION API INPUT
-        let queryObj = {
-            document: {
-                type: "PLAIN_TEXT",
-                language: "en",
-                content: PRODUCT + ". " + desc
-            }
-        };
-
-        // GET CLASSIFICATION INFORMATION
-        const xhttp = new XMLHttpRequest();
-        xhttp.open("POST", API_GOOGLE_NLP, false);
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send(JSON.stringify(queryObj));
-        const CLASSIFICATION = JSON.parse(xhttp.responseText);
-        data.api_classification = CLASSIFICATION;
-
-        // FIND ROOT CLASSIFICATION CATEGORY
-        let category;
-        if (!CLASSIFICATION || !CLASSIFICATION.categories || !CLASSIFICATION.categories[0])
-            category = "OTHER";
-        else
-            category = CLASSIFICATION.categories[0].name;
-        data.api_category = category;
-
         // GET CO2 EMISSION INFORMATION
         chrome.runtime.sendMessage({
             type: "AMAZON_CO2_INFORMATION",
