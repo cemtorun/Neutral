@@ -14,3 +14,23 @@ function findASINfromURL(url) {
         return;
     return ASIN_REGEX_GROUPS[2];
 }
+
+function _$(num) {
+    return displayNumber(num, 2);
+}
+function _int(num) {
+    return displayNumber(num, 0);
+}
+function _kg(num) {
+    return displayNumber(num, 3);
+}
+function _L(num) {
+    return displayNumber(num, 3)
+}
+
+function displayNumber(num, digits = 2) {
+    if (Number.isInteger(num)) {
+        return num;
+    }
+    return num.toFixed(digits);
+}

@@ -42,8 +42,8 @@ class PopupHandler extends AbstractWebsiteHandler {
             }
             if (popupPage.includes("details")) {
               document.getElementById("name").innerHTML = cur_prod.product_name;
-              document.getElementById("co2e").innerHTML = cur_prod.api_co2_result.CO2e;
-              document.getElementById("co2e_water").innerHTML = cur_prod.api_co2_result.water;
+              document.getElementById("co2e").innerHTML = _kg(cur_prod.api_co2_result.CO2e);
+              document.getElementById("co2e_water").innerHTML = _L(cur_prod.api_co2_result.water);
             }
           });
     }
@@ -79,8 +79,14 @@ class PopupHandler extends AbstractWebsiteHandler {
           const cur_prod = result.amazon_product_info.filter((p) => p.product_id == product_id)[0];
           co2_total += cur_prod.api_co2_result.CO2e * quantity;
           co2_water += cur_prod.api_co2_result.water * quantity;
-          document.getElementById("co2e").innerHTML = co2_total;
-          document.getElementById("co2e_water").innerHTML = co2_water;
+          if (document.getElementById("co2e"))
+            document.getElementById("co2e").innerHTML = _kg(co2_total);
+            if (document.getElementById("co2e_water"))
+          document.getElementById("co2e_water").innerHTML = _L(co2_water);
+          if (document.getElementById("donate-value"))
+          document.getElementById("donate-value").innerHTML = _$(co2_total * 0.25);
+          if (document.getElementsByClassName("donate-button")[0])
+          document.getElementsByClassName("donate-button")[0].value = "Donate $" + _$(co2_total * 0.25);
         });
       });
 
