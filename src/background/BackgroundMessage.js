@@ -9,6 +9,9 @@ class BackgroundMessage {
                 case "AMAZON_CO2_INFORMATION":
                     this.Handle_AmazonCO2Information(request.data);
                     break;
+                case "AMAZON_CART_INFORMATION" :
+                    this.Handle_AmazonCartInformation(request.data);
+                    break;
                 default:
                     console.log("INVALID REQUEST TYPE");
             }
@@ -103,6 +106,57 @@ class BackgroundMessage {
                     });
                 });
             });
+        });
+    }
+
+    Handle_AmazonCartInformation = (data) => {
+        const info = JSON.parse(JSON.stringify(data));
+
+        // GET CUMULATIVE CART DATA
+        let co2_total = 0;
+        let co2_water = 0;
+        let donation_value = 0;
+
+        // FROM STORAGE
+        chrome.storage.local.get('amazon_product_info', function (result) {
+            let product_ids = [];
+            data.forEach(item => {
+                const ASIN = item.product_id;
+                const QUANTITY = item.quantity;
+
+                const cur_prod = result.amazon_product_info.filter((p) => p.product_id == ASIN)[0];
+                co2_total += cur_prod.api_co2_result.CO2e * QUANTITY;
+                co2_water += cur_prod.api_co2_result.water * QUANTITY;
+                product_ids.push(ASIN);
+            });
+            donation_value = co2_total * 0.04545454545;
+
+            // SET CART DATA
+            let cartData = {
+                co2: co2_total,
+                water: co2_water,
+                donation: donation_value
+            };
+            chrome.storage.local.set({amazon_cart_info: cartData}, () => {
+                console.log(cartData);
+            });
+
+            // REGISTER PURCHASE TO STORAGE
+            chrome.storage.local.get('amazon_product_info', function (result) {
+                const newData = [];
+                const currData = result.amazon_product_info;
+                currData.forEach((data) => {
+                    const data_changed = data;
+                    if (product_ids.includes(data_changed.product_id)) {
+                        data_changed.purchase_date = new Date().getUTCDate() + "/" + (new Date().getMonth() + 1) + "/" + new Date().getFullYear();
+                    }
+                    newData.push(data_changed);
+                });
+        
+                chrome.storage.local.set({amazon_product_info: newData}, () => {
+                    console.log(newData);
+                });
+              });
         });
     }
 }

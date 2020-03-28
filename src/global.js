@@ -32,5 +32,8 @@ function displayNumber(num, digits = 2) {
     if (Number.isInteger(num)) {
         return num;
     }
-    return num.toFixed(digits);
+    if (!!num) {
+        return num.toFixed(digits);
+    }
+    return 0;
 }

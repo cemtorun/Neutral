@@ -53,12 +53,32 @@ class CollectionFrontend extends AbstractWebsiteHandler {
         const PRICE = PRICE_DATA.innerHTML.replace("$", "").replace("CDN", "").replace("&nbsp;", "").trim();
         data.price = PRICE;
 
-        // GET CO2 EMISSION INFORMATION
+        // SEND CO2 EMISSION INFORMATION TO MESSAGE BACKEND
         chrome.runtime.sendMessage({
             type: "AMAZON_CO2_INFORMATION",
             data: data
         }, (response) => {
             console.log("CO2 Emission Collection: " + response)
+        })
+    }
+
+    RunAmazonCartPage = (url) => {
+        // GET CART INFORMATION
+        let data = [];
+        const cartElems = document.querySelectorAll("div[data-itemtype='active']");
+        for (let i = 0; i < cartElems.length; i++) {
+            data.push({
+                product_id: cartElems[i].dataset.asin,
+                quantity: cartElems[i].dataset.quantity
+            })
+        }
+
+        // SEND CART INFORMATION TO MESSAGE BACKEND
+        chrome.runtime.sendMessage({
+            type: "AMAZON_CART_INFORMATION",
+            data: data
+        }, (response) => {
+            console.log("CO2 Cart Collection: " + response)
         })
     }
 
