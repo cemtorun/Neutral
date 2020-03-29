@@ -3,5 +3,5 @@
 
     popupHandler.RunForCurrentTab();
 
-    //chrome.storage.onChanged.addListener(popupHandler.DataChangeCallback);
+    chrome.storage.onChanged.addListener(popupHandler.DataChangeCallback);
 })();

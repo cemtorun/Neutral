@@ -50,7 +50,11 @@ class CollectionFrontend extends AbstractWebsiteHandler {
                            document.getElementById("priceblock_dealprice");
         if (!PRICE_DATA)
             return;
-        const PRICE = PRICE_DATA.innerHTML.replace("$", "").replace("CDN", "").replace("&nbsp;", "").trim();
+        const PRICE = PRICE_DATA.innerHTML.replace("$", "")
+                                          .replace("CDN", "")
+                                          .replace("&nbsp;", "")
+                                          .replace(",", "")
+                      .trim();
         data.price = PRICE;
 
         // SEND CO2 EMISSION INFORMATION TO MESSAGE BACKEND

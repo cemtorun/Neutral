@@ -3,6 +3,12 @@ class PopupHandler extends AbstractWebsiteHandler {
         super();
     }
 
+    DataChangeCallback = (changes, areaName) => {
+        if (areaName == "local") {
+            this.RunForCurrentTab();
+        }
+    }
+
     RunAmazonProductPage = (url) => {
         // FIND ASIN
         const product_id = findASINfromURL(url);
@@ -11,7 +17,7 @@ class PopupHandler extends AbstractWebsiteHandler {
             const cur_prod = result.amazon_product_info.filter((p) => p.product_id == product_id)[0];
       
             const popupPage = location.href;
-            if (popupPage.includes("product")) {
+            if (popupPage.includes("product") && !!cur_prod) {
                 document.getElementById("name").innerHTML = cur_prod.product_name;
                 document.getElementById("category").innerHTML = cur_prod.api_category;
         
