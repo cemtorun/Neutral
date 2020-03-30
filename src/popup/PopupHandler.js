@@ -8,6 +8,26 @@ class PopupHandler extends AbstractWebsiteHandler {
             this.RunForCurrentTab();
         }
     }
+    
+    RunOtherPage = (url) => { 
+        // GET AMAZON EMISIONS DATA
+        chrome.storage.local.get('amazon_product_info', function (result) {
+            let co2_total = 0;
+            let water_total = 0;
+            result.amazon_product_info.forEach(product => {
+                if (product.purchase_date) {
+                    co2_total += product.api_co2_result.CO2e;
+                    water_total += product.api_co2_result.water;
+                }
+            });
+
+            // DISPLAY ONTO POPUP
+            if (document.getElementById("co2e"))
+                document.getElementById("co2e").innerHTML = _kg(co2_total);
+            if (document.getElementById("co2e_water"))
+                document.getElementById("co2e_water").innerHTML = _L(water_total);
+        });
+    }
 
     RunAmazonProductPage = (url) => {
         // FIND ASIN

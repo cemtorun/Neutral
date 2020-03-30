@@ -1,17 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Neutral</title>
     <link rel="stylesheet" href="popup.css" />
     <link rel="stylesheet" href="../../../includes/fontawesome/all.min.css">
 </head>
+
 <body>
-    DEFAULT PAGE
+    <div class="controls">
+        <div class="control-action action-close">
+            <i class="fas fa-times"></i>
+        </div>
+        <div class="control-action action-dashboard">
+            <i class="fas fa-cog"></i>
+        </div>
+    </div>       
+    <div class="report">
+        <h2>neutral</h2>
+        <h1 class="title">Unsupported Website</h1>
+        <hr />
+
+        <p class="description merchant">Here's an overview of your statistics:</p>
+        <div class="merchant">
+            <p class="subtitle">CO<sub>2</sub> Consumption</p>
+            <p id="co2e" class="consumption statistic">759</p>
+            <p class="consumption description">kilograms</p>
+        </div>
+
+        <div class="product">
+            <p class="subtitle">Water Usage</p>
+            <p id="co2e_water" class="consumption statistic">385</p>
+            <p class="consumption description">liters</p>
+        </div>
+
+        <div class="button-container">
+            <input id="gotoDashboard" class="button action-dashboard" type="submit" value="Open Dashboard">
+        </div>
+    </div>
 
     <script src="../../global.js"></script>
     <script src="../../AbstractWebsiteHandler.js"></script>
     <script src="../PopupHandler.js"></script>
     <script src="../popup.js"></script>
 </body>
+
 </html>
