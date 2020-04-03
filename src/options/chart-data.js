@@ -71,37 +71,3 @@ function drawGraph() {
         }
     });
 }
-
-/*var ctx2 = document.getElementById('category-chart');
-var myDoughnutChart = new Chart(ctx2, {
-    type: 'doughnut',
-    data: {
-        datasets: [{
-
-            backgroundColor: "rgb(121,200,166)",
-            borderColor: "rgb(121,200,166)",
-            data: [10, 20, 30]
-        }],
-
-
-
-        // These labels appear in the legend and in the tooltips when hovering different arcs
-        labels: [
-            'Red',
-            'Yellow',
-            'Blue'
-        ],
-    },
-    options: {
-        legend: {
-            display: false
-        },
-        tooltips: {
-            callbacks: {
-                label: function(tooltipItem) {
-                    return tooltipItem.yLabel;
-                }
-            }
-        }
-    }
-});*/

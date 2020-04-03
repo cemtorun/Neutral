@@ -5,6 +5,11 @@
     src: url("../../fonts/Futura.ttf") format("truetype");
 }
 
+.container.main-content {
+    padding-right: 24px;
+    padding-left: 40px;
+}
+
 .black-text {
     color: black;
     display: inline-block;

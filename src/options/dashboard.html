@@ -15,7 +15,7 @@
 <body>
     <div class="grey-bg">
 
-        <div class="container">
+        <div class="container main-content">
             <div class="row top-padding ">
                 <h1>
                     <div class="title-text">
@@ -92,9 +92,8 @@
 
                 <!--Categories Cared-->
                 <div class="col-lg-4 card">
-                    <h2 class="card-h2">Mostly from ...</h2>
-                    <h6 style="margin-top: 50px;"><i>Development In-Progress</i></h6>
-                    <h6 style=""><b>Pie-chart goes here</b></h6>
+                    <h2 class="card-h2">Mostly from <span id="category-title"></span></h2>
+                    <h6><b>Here's a breakdown:</b></h6>
                     <canvas id="category-chart" width="200" height="250"></canvas>
                 </div>
 
@@ -139,9 +138,9 @@
                     <h2 class="emoji">🛒</h2>
                     <h2 class="after-emoji">Reduce online shopping</h2>
                     <p>Reduce and downsize what you purchase, opt to be mindful of what you really need.</p>
-                    <button>
+                    <!--button>
                         <p>Learn More</p>
-                    </button>
+                    </button-->
                 </div>
                 <div class="col-lg-4 card top-margin">
                     <div class="top-tab">
@@ -150,9 +149,9 @@
                     <h2 class="emoji">👯</h2>
                     <h2 class="after-emoji">Browse with friends</h2>
                     <p>Buy products together with friends to cut down on shipping costs.</p>
-                    <button>
+                    <!--button>
                         <p>Learn More</p>
-                    </button>
+                    </button-->
                 </div>
                 <div class="col-lg-4 card top-margin">
                     <div class="top-tab">
@@ -161,9 +160,9 @@
                     <h2 class="emoji">🇺🇸</h2>
                     <h2 class="after-emoji">Shop Locally</h2>
                     <p>Shipping overseas creates large amounts of CO<sub>2</sub> through gas and transportation. </p>
-                    <button>
+                    <!--button>
                         <p>Learn More</p>
-                    </button>
+                    </button-->
                 </div>
 
                 <!--Second Bar-->
@@ -224,6 +223,7 @@
         <script src="../../includes/bootstrap.min.js"></script>
         <script src="../../includes/chartjs.bundle.min.js"></script>
         <script src="chart-data.js"></script>
+        <script src="pie-data.js"></script>
         <script src="dashboard.js"></script>
 </body>
 

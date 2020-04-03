@@ -146,7 +146,15 @@ function getData() {
             ENERGY_TREND_DATA[e.date] += e.data;
         });
 
+        CATEGORY_PIE_DATA = [];
+        CATEGORY_PIE.forEach((e) => {
+            if (!CATEGORY_PIE_DATA[e.category])
+                CATEGORY_PIE_DATA[e.category] = 0;
+            CATEGORY_PIE_DATA[e.category] += e.co2;
+        })
+
         carbon();
+        drawPie();
         changeWhales();
         updatePage();
     });
@@ -170,7 +178,7 @@ function updatePage() {
     for (let i = PURCHASE_HISTORY.length - 1; i >= 0; i--) {
         names[count].innerHTML = PURCHASE_HISTORY[i].name;
         vals[count].innerHTML = _kg(PURCHASE_HISTORY[i].co2) + " kg of CO2";
-        if (count++ > 4)
+        if (count++ >= 3)
             break;
     }
 }
