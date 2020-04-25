@@ -130,10 +130,9 @@ p.merchant {
 }
 
 .product-img {
-  justify-content: flex-end;
-  align-self: center;
   position: fixed;
   right: -33px;
+  bottom: 45px;
 }
 
 .button-container {

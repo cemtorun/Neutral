@@ -17,9 +17,9 @@
     ],
     "background": {
         "scripts": [
+            "includes/lodash-core.js",
             "src/global.js",
             "src/AbstractWebsiteHandler.js",
-            "src/background/Initializer.js",
             "src/background/PopupSwitcher.js",
             "src/background/BackgroundMessage.js",
             "src/background/background.js"

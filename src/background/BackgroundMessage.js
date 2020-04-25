@@ -67,14 +67,19 @@ class BackgroundMessage {
     }
 
     Handle_AmazonCartInformation = (data) => {
+        const auth = {
+            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTg3ODUxNDYxLCJleHAiOjE1OTA0NDM0NjF9.OEdPqM9q7M_CMBfxnvy-ErOJqYzAyH-4QVXZlmbjVq0",
+            id: 1,
+        };
         const info = JSON.parse(JSON.stringify(data));
 
         // GET CUMULATIVE CART DATA
         let co2_total = 0;
         let co2_water = 0;
         let donation_value = 0;
+        let products = [];
 
-        // FROM STORAGE
+        // FETCH CACHED PRODUCT INFO FROM STORAGE
         chrome.storage.local.get('amazon_product_info', function (result) {
             let product_ids = [];
             data.forEach(item => {
@@ -82,37 +87,52 @@ class BackgroundMessage {
                 const QUANTITY = item.quantity;
 
                 const cur_prod = result.amazon_product_info.filter((p) => p.product_id == ASIN)[0];
-                co2_total += cur_prod.api_co2_result.CO2e * QUANTITY;
+                cur_prod.quantity = QUANTITY;
+                co2_total += cur_prod.api_co2_result.co2e * QUANTITY;
                 co2_water += cur_prod.api_co2_result.water * QUANTITY;
                 product_ids.push(ASIN);
+                products.push(cur_prod);
             });
             donation_value = co2_total * 0.04545454545;
 
             // SET CART DATA
             let cartData = {
                 co2: co2_total,
+                donation: donation_value,
                 water: co2_water,
-                donation: donation_value
+                products: products,
             };
-            chrome.storage.local.set({ amazon_cart_info: cartData }, () => {
-                console.log(cartData);
+
+            // CHECK CART CHANGE
+            chrome.storage.local.get('amazon_cart_info', function(result) {
+                if (!_.isEqual(cartData, result.amazon_cart_info)) {
+                    console.log("Cart changed!");
+
+                    // REGISTER PURCHASE(S) ON BACKEND
+                    products.forEach(product => {
+                        const xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function () {
+                            if (this.readyState == 4) {
+                                console.log(xhttp.responseText);
+                            }
+                        }
+                        xhttp.open("POST", "http://neutral-dev.tk:1337/purchases", true);
+                        xhttp.setRequestHeader("Content-type", "application/json");
+                        xhttp.setRequestHeader("Authorization", "Bearer " + auth.token);
+                        xhttp.send(JSON.stringify({
+                            "product_name": product.product_name,
+                            "purchase_location": "amazon",
+                            "price": product.price,
+                            "product_category": product.api_category,
+                            "quantity": product.quantity,
+                        }))
+                    });
+                }
             });
 
-            // REGISTER PURCHASE TO STORAGE
-            chrome.storage.local.get('amazon_product_info', function (result) {
-                const newData = [];
-                const currData = result.amazon_product_info;
-                currData.forEach((data) => {
-                    const data_changed = data;
-                    if (product_ids.includes(data_changed.product_id)) {
-                        data_changed.purchase_date = new Date().getUTCDate() + "/" + (new Date().getMonth() + 1) + "/" + new Date().getFullYear();
-                    }
-                    newData.push(data_changed);
-                });
-
-                chrome.storage.local.set({ amazon_product_info: newData }, () => {
-                    console.log(newData);
-                });
+            // CACHE CART IN STORAGE
+            chrome.storage.local.set({ amazon_cart_info: cartData }, () => {
+                console.log(cartData);
             });
         });
     }
