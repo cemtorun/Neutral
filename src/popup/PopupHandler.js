@@ -9,6 +9,7 @@ class PopupHandler extends AbstractWebsiteHandler {
         }
     }
     
+    // TODO NEEDS TO CHANGE -> Get All User purchases here from API END POINT
     RunOtherPage = (url) => { 
         // GET AMAZON EMISIONS DATA
         chrome.storage.local.get('amazon_product_info', function (result) {
@@ -64,7 +65,7 @@ class PopupHandler extends AbstractWebsiteHandler {
             }
             if (popupPage.includes("details")) {
                 document.getElementById("name").innerHTML = cur_prod.product_name;
-                document.getElementById("co2e").innerHTML = _kg(cur_prod.api_co2_result.CO2e);
+                document.getElementById("co2e").innerHTML = _kg(cur_prod.api_co2_result.co2e);
                 document.getElementById("co2e_water").innerHTML = _L(cur_prod.api_co2_result.water);
             }
         });

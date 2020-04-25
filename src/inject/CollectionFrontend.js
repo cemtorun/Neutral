@@ -13,11 +13,7 @@ class CollectionFrontend extends AbstractWebsiteHandler {
             product_id: "",
             product_name: "",
             product_desc: "",
-            price: 0.0,
-            api_classification: {},
-            api_category: "",
-            api_co2_result: {},
-            purchase_date: undefined
+            price: 0.0
         }
 
         // FIND ASIN
