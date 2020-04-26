@@ -158,6 +158,7 @@ function updateEmissionsData(product) {
 }
 
 function getEmissionsData(product) {
+    console.log(new Error(1));
     // GET EMISSION VALUES FROM BACKEND
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -189,7 +190,14 @@ function getEmissionsData(product) {
     }));
 }
 
+let lock = false;
 async function getData() {
+
+    // NOTE, FIX THIS, MAKE THIS REAL
+    if (lock)
+        return;
+    lock = true;
+
     // Reset Globals
     CO2_TREND = [];
     ENERGY_TREND = [];
@@ -226,6 +234,7 @@ async function getData() {
                         updatePage();
                     }
                 }
+                lock = false;
             }
         }
         xhttp.open("GET", "http://neutral-dev.tk:1337/purchases", true);
@@ -236,16 +245,19 @@ async function getData() {
     } else {
         // GET PURCHASES FROM LOCAL STORE
         chrome.storage.local.get('neutral_purchases', function (result) {
-            result.neutral_purchases.forEach(product => {
-                getEmissionsData(product);
-            });
+            if (result && result.neutral_purchases)
+                result.neutral_purchases.forEach(product => {
+                    getEmissionsData(product);
+                });
 
-            if (result.neutral_purchases.length == 0) {
+            if (!result || !result.neutral_purchases || result.neutral_purchases.length == 0) {
                 carbon();
                 drawPie();
                 changeWhales();
                 updatePage();
             }
+
+            lock = false;
         });
     }
 }
@@ -353,6 +365,7 @@ async function updateUserStatus() {
     } else {
         $("#login-signup").removeClass("hidden");
         $("#user-info").addClass("hidden");
+        $("#header-perm-text").addClass("pointer");
         getData();
         $("#header-perm-text")[0].innerHTML = 'Login/Signup to sync your past purchases <i class="fas fa-arrow-down"></i>';
     }
