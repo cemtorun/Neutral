@@ -36,6 +36,9 @@ class PopupHandler extends AbstractWebsiteHandler {
         } else {
             // GET PURCHASES FROM LOCAL STORE
             chrome.storage.local.get('neutral_purchases', result => {
+                if (!result || !result.neutral_purchases)
+                    return;
+
                 result.neutral_purchases.forEach(product => {
                     this.DisplayEmissionsData(product);
                 });
@@ -82,6 +85,9 @@ class PopupHandler extends AbstractWebsiteHandler {
 
         // FETCH CACHED PRODUCT INFO FROM STORAGE
         chrome.storage.local.get('amazon_product_info', function (result) {
+            if (!result || !result.amazon_product_info)
+                return;
+
             const cur_prod = result.amazon_product_info.filter((p) => p.product_id == product_id)[0];
 
             if (!!cur_prod) {
