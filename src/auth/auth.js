@@ -11,7 +11,7 @@ function userRegister(username, email, password, callback) {
 }
 
 function isLoggedIn() {
-    return false;
+    return true;
 }
 
 function getUser() {

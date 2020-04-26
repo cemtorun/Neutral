@@ -55,7 +55,7 @@ class BackgroundMessage {
                             console.log(newData);
                         });
                     });
-                } 
+                }
             }
         }
         xhttp.open("POST", "http://neutral-dev.tk:1234/get-values", true);
@@ -100,13 +100,23 @@ class BackgroundMessage {
             };
 
             // CHECK CART CHANGE
-            chrome.storage.local.get('amazon_cart_info', function(result) {
+            chrome.storage.local.get('amazon_cart_info', function (result) {
                 if (!_.isEqual(cartData, result.amazon_cart_info)) {
                     console.log("Cart changed!");
 
-                    // REGISTER PURCHASE(S) ON BACKEND
-                    if (isLoggedIn()) {
-                        products.forEach(product => {
+                    // REGISTER PURCHASE(S)
+                    let purchases = [];
+                    products.forEach(product => {
+                        const purchase = {
+                            "product_name": product.product_name,
+                            "purchase_location": "amazon",
+                            "price": product.price,
+                            "product_category": product.api_category,
+                            "quantity": product.quantity,
+                        };
+
+                        // ON BACKEND
+                        if (isLoggedIn()) {
                             const xhttp = new XMLHttpRequest();
                             xhttp.onreadystatechange = function () {
                                 if (this.readyState == 4) {
@@ -115,16 +125,20 @@ class BackgroundMessage {
                             }
                             xhttp.open("POST", "http://neutral-dev.tk:1337/purchases", true);
                             xhttp.setRequestHeader("Content-type", "application/json");
-                            xhttp.setRequestHeader("Authorization", "Bearer " + auth.token);
-                            xhttp.send(JSON.stringify({
-                                "product_name": product.product_name,
-                                "purchase_location": "amazon",
-                                "price": product.price,
-                                "product_category": product.api_category,
-                                "quantity": product.quantity,
-                            }))
-                        });
-                    }
+                            xhttp.setRequestHeader("Authorization", "Bearer " + getUser().jwt);
+                            xhttp.send(JSON.stringify(purchase));
+                        }
+                        purchases.push(purchase);
+                    });
+
+                    // LOCALLY
+                    chrome.storage.local.get('neutral_purchases', function (result) {
+                        if (result && result.neutral_purchases) {
+                            purchases.push(...result.neutral_purchases);
+                        }
+                        chrome.storage.local.set({ neutral_purchases: purchases }, null);
+                        console.log(purchases);
+                    });
                 }
             });
 

@@ -8,26 +8,71 @@ class PopupHandler extends AbstractWebsiteHandler {
             this.RunForCurrentTab();
         }
     }
-    
-    // TODO NEEDS TO CHANGE -> Get All User purchases here from API END POINT
-    RunOtherPage = (url) => { 
-        // GET AMAZON EMISIONS DATA
-        chrome.storage.local.get('amazon_product_info', function (result) {
-            let co2_total = 0;
-            let water_total = 0;
-            result.amazon_product_info.forEach(product => {
-                if (product.purchase_date) {
-                    co2_total += product.api_co2_result.CO2e;
-                    water_total += product.api_co2_result.water;
-                }
-            });
 
-            // DISPLAY ONTO POPUP
-            if (document.getElementById("co2e"))
-                document.getElementById("co2e").innerHTML = _kg(co2_total);
-            if (document.getElementById("co2e_water"))
-                document.getElementById("co2e_water").innerHTML = _L(water_total);
-        });
+    RunOtherPage = (url) => {
+        // GET AMAZON EMISIONS DATA
+
+        if (isLoggedIn()) {
+            // GET PURCHASES FROM BACKEND
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = () => {
+                if (xhttp.readyState == 4) {
+                    console.log(xhttp.responseText);
+                    if (xhttp.status == 200) {
+
+                        // PARSE API CALL DATA
+                        const content = JSON.parse(xhttp.responseText);
+                        content.forEach(product => {
+                            this.DisplayEmissionsData(product);
+                        });
+                    }
+                }
+            }
+            xhttp.open("GET", "http://neutral-dev.tk:1337/purchases", true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.setRequestHeader("Authorization", "Bearer " + getUser().jwt);
+            xhttp.send();
+        } else {
+            // GET PURCHASES FROM LOCAL STORE
+            chrome.storage.local.get('neutral_purchases', function (result) {
+                result.neutral_purchases.forEach(product => {
+                    this.DisplayEmissionsData(product);
+                });
+            });
+        }
+    }
+
+    DisplayEmissionsData = (product) => {
+        // GET EMISSION VALUES FROM BACKEND
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4) {
+                console.log(xhttp.responseText);
+                if (this.status == 200) {
+
+                    // GET CURRENT DATA
+                    let co2_total = Number(document.getElementById("co2e").innerHTML);
+                    let water_total = Number(document.getElementById("co2e_water").innerHTML);
+
+                    // PARSE API CALL DATA
+                    const content = JSON.parse(xhttp.responseText);
+                    co2_total += content.values.co2e * product.quantity;
+                    water_total += content.values.water * product.quantity;
+
+                    // UPDATE POPUP
+                    if (document.getElementById("co2e"))
+                        document.getElementById("co2e").innerHTML = _kg(co2_total);
+                    if (document.getElementById("co2e_water"))
+                        document.getElementById("co2e_water").innerHTML = _L(water_total);
+                }
+            }
+        }
+        xhttp.open("POST", "http://neutral-dev.tk:1234/get-values", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(JSON.stringify({
+            "category": product.product_category,
+            "price": product.price,
+        }));
     }
 
     RunAmazonProductPage = (url) => {
@@ -41,7 +86,7 @@ class PopupHandler extends AbstractWebsiteHandler {
             if (!!cur_prod) {
                 // SET MEDIA IMAGE
                 var product_image = document.getElementById("product-image");
-        
+
                 if (cur_prod.api_category.includes("/Home & Garden")) {
                     product_image.src = "../../../media/categories/home.png";
                 } else if (cur_prod.api_category.includes("/Computers & Electronics")) {
