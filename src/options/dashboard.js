@@ -114,6 +114,7 @@ function updateEmissionsData(product) {
     });
     PURCHASE_HISTORY.push({
         name: product.product_name,
+        real_name: product.product_real_name,
         id: product.id,
         date: product.purchase_date,
         co2: product.api_co2_result.co2e
@@ -169,6 +170,7 @@ function getEmissionsData(product) {
                 product.api_co2_result = content.values;
 
                 // UPDATE PAGE
+                product.product_real_name = product.product_name;
                 if (product.quantity > 1) {
                     product.api_co2_result.co2e *= product.quantity;
                     product.api_co2_result.water *= product.quantity;
@@ -237,6 +239,13 @@ async function getData() {
             result.neutral_purchases.forEach(product => {
                 getEmissionsData(product);
             });
+
+            if (result.neutral_purchases.length == 0) {
+                carbon();
+                drawPie();
+                changeWhales();
+                updatePage();
+            }
         });
     }
 }
@@ -271,11 +280,15 @@ function updatePage() {
         names[count].innerHTML = PURCHASE_HISTORY[i].name;
         vals[count].innerHTML = _kg(PURCHASE_HISTORY[i].co2) + " kg of CO2";
 
-        actions[count].innerHTML = '<button id="delete-' + PURCHASE_HISTORY[i].id + '" class="btn">X</button>';
-        const newDelButton = document.getElementById("delete-" + PURCHASE_HISTORY[i].id);
+        actions[count].innerHTML = '<button id="delete-' + i + '" class="btn">X</button>';
+        const newDelButton = document.getElementById("delete-" + i);
         newDelButton.addEventListener("click", (e) => {
             e.preventDefault();
-            deleteHistory(PURCHASE_HISTORY[i].id);
+
+            if (PURCHASE_HISTORY[i].id)
+                deleteHistory(PURCHASE_HISTORY[i].id, false);
+            else
+                deleteHistory(PURCHASE_HISTORY[i].real_name, PURCHASE_HISTORY[i].date);
         });
 
         if (count++ >= 3)
@@ -283,9 +296,9 @@ function updatePage() {
     }
 }
 
-async function deleteHistory(id) {
+async function deleteHistory(id, date) {
     const loggedIn = await isLoggedIn();
-    if (loggedIn) {
+    if (loggedIn && !date) {
         // SEND DELETE REQUEST TO BACKEND
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = () => {
@@ -299,5 +312,17 @@ async function deleteHistory(id) {
         const token = (await getUser()).jwt;
         xhttp.setRequestHeader("Authorization", "Bearer " + token);
         xhttp.send();
+    } else {
+        // DELETE FROM LOCAL STORAGE
+        chrome.storage.local.get('neutral_purchases', function(result) {
+            const purchases = result.neutral_purchases;
+            const afterRemove = purchases.filter((purchase) => !(purchase.product_name == id && purchase.purchase_date == date));
+
+            // SAVE CHANGES
+            chrome.storage.local.set({ neutral_purchases: afterRemove }, () => {
+                console.log(afterRemove);
+                getData();
+            });
+        })
     }
 }
