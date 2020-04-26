@@ -9,10 +9,10 @@ class PopupHandler extends AbstractWebsiteHandler {
         }
     }
 
-    RunOtherPage = (url) => {
+    RunOtherPage = async (url) => {
         // GET AMAZON EMISIONS DATA
-
-        if (isLoggedIn()) {
+        const loggedIn = await isLoggedIn();
+        if (loggedIn) {
             // GET PURCHASES FROM BACKEND
             const xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = () => {
@@ -30,11 +30,12 @@ class PopupHandler extends AbstractWebsiteHandler {
             }
             xhttp.open("GET", "http://neutral-dev.tk:1337/purchases", true);
             xhttp.setRequestHeader("Content-type", "application/json");
-            xhttp.setRequestHeader("Authorization", "Bearer " + getUser().jwt);
+            const token = await getUser().jwt;
+            xhttp.setRequestHeader("Authorization", "Bearer " + token);
             xhttp.send();
         } else {
             // GET PURCHASES FROM LOCAL STORE
-            chrome.storage.local.get('neutral_purchases', function (result) {
+            chrome.storage.local.get('neutral_purchases', result => {
                 result.neutral_purchases.forEach(product => {
                     this.DisplayEmissionsData(product);
                 });

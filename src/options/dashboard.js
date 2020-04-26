@@ -205,7 +205,8 @@ async function getData() {
         }
         xhttp.open("GET", "http://neutral-dev.tk:1337/purchases", true);
         xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.setRequestHeader("Authorization", "Bearer " + getUser().jwt);
+        const token = await getUser().jwt;
+        xhttp.setRequestHeader("Authorization", "Bearer " + token);
         xhttp.send();
     } else {
         // GET PURCHASES FROM LOCAL STORE

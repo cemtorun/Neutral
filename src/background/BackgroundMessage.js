@@ -66,7 +66,7 @@ class BackgroundMessage {
         }));
     }
 
-    Handle_AmazonCartInformation = (data) => {
+    Handle_AmazonCartInformation = async (data) => {
         const info = JSON.parse(JSON.stringify(data));
 
         // GET CUMULATIVE CART DATA
@@ -76,7 +76,7 @@ class BackgroundMessage {
         let products = [];
 
         // FETCH CACHED PRODUCT INFO FROM STORAGE
-        chrome.storage.local.get('amazon_product_info', function (result) {
+        chrome.storage.local.get('amazon_product_info', async function (result) {
             let product_ids = [];
             data.forEach(item => {
                 const ASIN = item.product_id;
@@ -100,13 +100,13 @@ class BackgroundMessage {
             };
 
             // CHECK CART CHANGE
-            chrome.storage.local.get('amazon_cart_info', function (result) {
+            chrome.storage.local.get('amazon_cart_info', async function (result) {
                 if (!_.isEqual(cartData, result.amazon_cart_info)) {
                     console.log("Cart changed!");
 
                     // REGISTER PURCHASE(S)
                     let purchases = [];
-                    products.forEach(product => {
+                    products.forEach(async (product) => {
                         const purchase = {
                             "product_name": product.product_name,
                             "product_category": product.api_category,
@@ -117,7 +117,8 @@ class BackgroundMessage {
                         };
 
                         // ON BACKEND
-                        if (isLoggedIn()) {
+                        const loggedIn = await isLoggedIn();
+                        if (loggedIn) {
                             const xhttp = new XMLHttpRequest();
                             xhttp.onreadystatechange = function () {
                                 if (this.readyState == 4) {
@@ -126,7 +127,8 @@ class BackgroundMessage {
                             }
                             xhttp.open("POST", "http://neutral-dev.tk:1337/purchases", true);
                             xhttp.setRequestHeader("Content-type", "application/json");
-                            xhttp.setRequestHeader("Authorization", "Bearer " + getUser().jwt);
+                            const token = await getUser().jwt;
+                            xhttp.setRequestHeader("Authorization", "Bearer " + token);
                             xhttp.send(JSON.stringify(purchase));
                         }
                         purchases.push(purchase);
