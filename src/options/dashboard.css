@@ -383,11 +383,21 @@ button>p {
     cursor: pointer;
 }
 #header.show-full {
-    height: 367px;
+    height: 100vh;
 }
 
 #btn-logout {
     line-height: 0px;
     margin-top: -4px;
     text-decoration: underline;
+}
+
+.hidden-mainpage {
+    overflow: hidden;
+}
+#login-signup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

@@ -345,6 +345,7 @@ $("#header-perm-text").on("click", async function () {
     if (!user) {
         document.getElementById("header").classList.toggle("show-full");
         document.getElementById("header-showing").classList.toggle("hidden");
+        $("body").toggleClass("hidden-mainpage");
     }
 });
 
@@ -358,6 +359,7 @@ async function updateUserStatus() {
         getData();
         $("#header-showing").addClass("hidden");
         $("#header").removeClass("show-full");
+        $("body").removeClass("hidden-mainpage");
         $("#btn-logout").on("click", function () {
             userLogout();
             updateUserStatus();
