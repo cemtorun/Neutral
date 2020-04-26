@@ -1,3 +1,5 @@
+var myPie;
+
 function drawPie() {
     let largest = "";
     let largestVal = -1;
@@ -10,7 +12,10 @@ function drawPie() {
     document.getElementById("category-title").innerHTML = largest;
 
     const ctx = document.getElementById("category-chart");
-    var myChart = new Chart(ctx, {
+    if (myPie)
+        myPie.destroy();
+        
+    myPie = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: Object.keys(CATEGORY_PIE_DATA),

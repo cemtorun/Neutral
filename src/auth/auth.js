@@ -6,7 +6,7 @@ var auth_url_login = auth_url_base + "/auth/local";
 async function jsonAPICall(endpoint, content) {
 	return await new Promise(function(resolve, reject) {
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", auth_url_login, true);
+		xhr.open("POST", endpoint, true);
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState == 4) {
 				var response = JSON.parse(xhr.responseText);
@@ -36,7 +36,7 @@ function userLogout() {
 	chrome.storage.local.remove(["login"]);
 }
 
-function userRegister(username, email, password) {
+async function userRegister(username, email, password) {
 	var ret = await jsonAPICall(auth_url_register, {
 		username: username,
 		email: email,

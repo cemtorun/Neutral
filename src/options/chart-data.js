@@ -40,6 +40,8 @@ function water() {
 
 function drawGraph() {
     var ctx = document.getElementById('co2-chart');
+    if (myChart)
+        myChart.destroy();
 
     myChart = new Chart(ctx, {
         type: 'line',

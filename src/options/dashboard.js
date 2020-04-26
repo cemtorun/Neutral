@@ -185,8 +185,9 @@ function getEmissionsData(product) {
     }));
 }
 
-function getData() {
-    if (isLoggedIn()) {
+async function getData() {
+    const loggedIn = await isLoggedIn();
+    if (loggedIn) {
         // GET PURCHASES FROM BACKEND
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = () => {
