@@ -67,10 +67,6 @@ class BackgroundMessage {
     }
 
     Handle_AmazonCartInformation = (data) => {
-        const auth = {
-            token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTg3ODUxNDYxLCJleHAiOjE1OTA0NDM0NjF9.OEdPqM9q7M_CMBfxnvy-ErOJqYzAyH-4QVXZlmbjVq0",
-            id: 1,
-        };
         const info = JSON.parse(JSON.stringify(data));
 
         // GET CUMULATIVE CART DATA
@@ -109,24 +105,26 @@ class BackgroundMessage {
                     console.log("Cart changed!");
 
                     // REGISTER PURCHASE(S) ON BACKEND
-                    products.forEach(product => {
-                        const xhttp = new XMLHttpRequest();
-                        xhttp.onreadystatechange = function () {
-                            if (this.readyState == 4) {
-                                console.log(xhttp.responseText);
+                    if (isLoggedIn()) {
+                        products.forEach(product => {
+                            const xhttp = new XMLHttpRequest();
+                            xhttp.onreadystatechange = function () {
+                                if (this.readyState == 4) {
+                                    console.log(xhttp.responseText);
+                                }
                             }
-                        }
-                        xhttp.open("POST", "http://neutral-dev.tk:1337/purchases", true);
-                        xhttp.setRequestHeader("Content-type", "application/json");
-                        xhttp.setRequestHeader("Authorization", "Bearer " + auth.token);
-                        xhttp.send(JSON.stringify({
-                            "product_name": product.product_name,
-                            "purchase_location": "amazon",
-                            "price": product.price,
-                            "product_category": product.api_category,
-                            "quantity": product.quantity,
-                        }))
-                    });
+                            xhttp.open("POST", "http://neutral-dev.tk:1337/purchases", true);
+                            xhttp.setRequestHeader("Content-type", "application/json");
+                            xhttp.setRequestHeader("Authorization", "Bearer " + auth.token);
+                            xhttp.send(JSON.stringify({
+                                "product_name": product.product_name,
+                                "purchase_location": "amazon",
+                                "price": product.price,
+                                "product_category": product.api_category,
+                                "quantity": product.quantity,
+                            }))
+                        });
+                    }
                 }
             });
 
