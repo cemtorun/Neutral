@@ -305,3 +305,36 @@ button>p {
     color: darkgray;
     margin-top: -10px;
 }
+
+#loginIdentifier {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+#loginPassword {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.login-signup-button {
+	margin-top: 15px;
+}
+
+.hidden {
+	display: none;
+}
+
+.nav-tabs {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#login, #signup {
+	padding: 15px;
+	border: 1px solid #dee2e6;
+	border-top: 0;
+}
+
+#login-signup {
+	width: 500px;
+}

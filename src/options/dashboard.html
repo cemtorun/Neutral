@@ -14,7 +14,33 @@
 
 <body>
     <div class="grey-bg">
+		<div id="login-signup">
+			<ul class="nav nav-tabs">
+				<li class="nav-item">
+					<a id="signup-tab" class="nav-link active" href="#">Sign up</a>
+				</li>
+				<li class="nav-item">
+					<a id="login-tab" class="nav-link" href="#">Log in</a>
+				</li>
+			</ul>
 
+			<div id="signup">
+				<form class="form-signin">
+					<input type="text" id="signupUser" class="form-control" placeholder="Username" required autofocus>
+					<input type="email" id="signupEmail" class="form-control" placeholder="Email address" required autofocus>
+					<input type="password" id="signupPassword" class="form-control" placeholder="Password" required>
+					<button id="signup" class="btn btn-lg btn-primary btn-block login-signup-button" type="submit">Sign up</button>
+				</form>
+			</div>
+
+			<div id="login" class="hidden">
+				<form class="form-signin">
+					<input type="text" id="loginIdentifier" class="form-control" placeholder="Username or Email" required autofocus>
+					<input type="password" id="loginPassword" class="form-control" placeholder="Password" required>
+					<button id="signin" class="btn btn-lg btn-primary btn-block login-signup-button" type="submit">Sign in</button>
+				</form>
+			</div>
+		</div>
         <div class="container main-content">
             <div class="row top-padding ">
                 <h1>

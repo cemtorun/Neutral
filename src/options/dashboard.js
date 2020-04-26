@@ -326,3 +326,17 @@ async function deleteHistory(id, date) {
         })
     }
 }
+
+$("#signup-tab").on("click", function() {
+	$("#login").addClass("hidden");
+	$("#signup").removeClass("hidden");
+	$("#login-tab").removeClass("active");
+	$("#signup-tab").addClass("active");
+});
+
+$("#login-tab").on("click", function() {
+	$("#login").removeClass("hidden");
+	$("#signup").addClass("hidden");
+	$("#login-tab").addClass("active");
+	$("#signup-tab").removeClass("active");
+});
