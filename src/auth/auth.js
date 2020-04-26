@@ -1,5 +1,5 @@
 "use strict";
-var auth_url_base = "neutral-dev.tk:1337"
+var auth_url_base = "http://neutral-dev.tk:1337"
 var auth_url_register = auth_url_base + "/auth/local/register";
 var auth_url_login = auth_url_base + "/auth/local";
 
@@ -17,7 +17,7 @@ async function jsonAPICall(endpoint, content) {
 				}
 			}
 		}
-		xhr.sendRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xhr.send(JSON.stringify(content));
 	});
 }
@@ -50,7 +50,7 @@ async function userRegister(username, email, password) {
 async function getUser() {
 	return await new Promise(function(resolve, reject) {
 		chrome.storage.local.get(["login"], function(res) {
-			resolve(res.jwt);
+			resolve(res.login);
 		});
 	});
 }
