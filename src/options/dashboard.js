@@ -89,75 +89,131 @@ document.getElementById("changeWater").addEventListener("click", function () {
     document.querySelector('.whales').innerHTML = whales;
 });
 
-function getData() {
-    let currData = [];
-    chrome.storage.local.get('amazon_product_info', function (result) {
-        result.amazon_product_info.forEach(product => {
-            let category = product.api_category;
-            if (product.api_category.includes("/")) {
-                category = product.api_category.split("/")[1];
-            }
+function updateEmissionsData(product) {
 
-            if (product.purchase_date) {
-                CO2_TREND.push({
-                    date: product.purchase_date,
-                    data: product.api_co2_result.CO2e
-                });
-                WATER_TREND.push({
-                    date: product.purchase_date,
-                    data: product.api_co2_result.water
-                });
-                ENERGY_TREND.push({
-                    date: product.purchase_date,
-                    data: product.api_co2_result.energy
-                });
-                CATEGORY_PIE.push({
-                    category: category,
-                    co2: product.api_co2_result.CO2e
-                });
-                PURCHASE_HISTORY.push({
-                    name: product.product_name,
-                    date: product.purchase_date,
-                    co2: product.api_co2_result.CO2e
-                });
-            }
-        });
+    let category = product.product_category;
+    if (product.product_category.includes("/")) {
+        category = product.product_category.split("/")[1];
+    }
 
-        CO2_TREND_DATA = [];
-        CO2_TREND.forEach((e) => {
-            if (!CO2_TREND_DATA[e.date])
-                CO2_TREND_DATA[e.date] = 0;
-            CO2_TREND_DATA[e.date] += e.data;
-            totalEmissions += e.data;
-        });
-
-        WATER_TREND_DATA = [];
-        WATER_TREND.forEach((e) => {
-            if (!WATER_TREND_DATA[e.date])
-                WATER_TREND_DATA[e.date] = 0;
-            WATER_TREND_DATA[e.date] += e.data;
-            totalWater += e.data;
-        });
-
-        ENERGY_TREND_DATA = [];
-        ENERGY_TREND.forEach((e) => {
-            if (!ENERGY_TREND_DATA[e.date])
-                ENERGY_TREND_DATA[e.date] = 0;
-            ENERGY_TREND_DATA[e.date] += e.data;
-        });
-
-        CATEGORY_PIE_DATA = [];
-        CATEGORY_PIE.forEach((e) => {
-            if (!CATEGORY_PIE_DATA[e.category])
-                CATEGORY_PIE_DATA[e.category] = 0;
-            CATEGORY_PIE_DATA[e.category] += e.co2;
-        })
-
-        carbon();
-        drawPie();
-        changeWhales();
-        updatePage();
+    CO2_TREND.push({
+        date: product.purchase_date,
+        data: product.api_co2_result.co2e
     });
+    WATER_TREND.push({
+        date: product.purchase_date,
+        data: product.api_co2_result.water
+    });
+    ENERGY_TREND.push({
+        date: product.purchase_date,
+        data: product.api_co2_result.energy
+    });
+    CATEGORY_PIE.push({
+        category: category,
+        co2: product.api_co2_result.co2e
+    });
+    PURCHASE_HISTORY.push({
+        name: product.product_name,
+        date: product.purchase_date,
+        co2: product.api_co2_result.co2e
+    });
+
+    CO2_TREND_DATA = [];
+    CO2_TREND.forEach((e) => {
+        if (!CO2_TREND_DATA[e.date])
+            CO2_TREND_DATA[e.date] = 0;
+        CO2_TREND_DATA[e.date] += e.data;
+        totalEmissions += e.data;
+    });
+
+    WATER_TREND_DATA = [];
+    WATER_TREND.forEach((e) => {
+        if (!WATER_TREND_DATA[e.date])
+            WATER_TREND_DATA[e.date] = 0;
+        WATER_TREND_DATA[e.date] += e.data;
+        totalWater += e.data;
+    });
+
+    ENERGY_TREND_DATA = [];
+    ENERGY_TREND.forEach((e) => {
+        if (!ENERGY_TREND_DATA[e.date])
+            ENERGY_TREND_DATA[e.date] = 0;
+        ENERGY_TREND_DATA[e.date] += e.data;
+    });
+
+    CATEGORY_PIE_DATA = [];
+    CATEGORY_PIE.forEach((e) => {
+        if (!CATEGORY_PIE_DATA[e.category])
+            CATEGORY_PIE_DATA[e.category] = 0;
+        CATEGORY_PIE_DATA[e.category] += e.co2;
+    })
+
+    carbon();
+    drawPie();
+    changeWhales();
+    updatePage();
+}
+
+function getEmissionsData(product) {
+    // GET EMISSION VALUES FROM BACKEND
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4) {
+            console.log(xhttp.responseText);
+            if (this.status == 200) {
+
+                // PARSE API CALL DATA
+                const content = JSON.parse(xhttp.responseText);
+                product.api_co2_result = content.values;
+
+                // UPDATE PAGE
+                if (product.quantity > 1) {
+                    product.api_co2_result.co2e *= product.quantity;
+                    product.api_co2_result.water *= product.quantity;
+                    product.api_co2_result.energy *= product.quantity;
+                    product.product_name += " (" + product.quantity + ")";
+                }
+                updateEmissionsData(product);
+            }
+        }
+    }
+    xhttp.open("POST", "http://neutral-dev.tk:1234/get-values", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify({
+        "category": product.product_category,
+        "price": product.price,
+    }));
+}
+
+function getData() {
+    if (isLoggedIn()) {
+        // GET PURCHASES FROM BACKEND
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = () => {
+            if (xhttp.readyState == 4) {
+                console.log(xhttp.responseText);
+                if (xhttp.status == 200) {
+
+                    // PARSE API CALL DATA
+                    const content = JSON.parse(xhttp.responseText);
+                    content.forEach(product => {
+                        getEmissionsData(product);
+                    });
+                }
+            }
+        }
+        xhttp.open("GET", "http://neutral-dev.tk:1337/purchases", true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.setRequestHeader("Authorization", "Bearer " + getUser().jwt);
+        xhttp.send();
+    } else {
+        // GET PURCHASES FROM LOCAL STORE
+        chrome.storage.local.get('neutral_purchases', function (result) {
+            result.neutral_purchases.forEach(product => {
+                getEmissionsData(product);
+            });
+        });
+    }
 }
 
 function updatePage() {
@@ -175,6 +231,10 @@ function updatePage() {
     let count = 0;
     const names = document.querySelectorAll(".history .history-row .grid-item.grid-name");
     const vals = document.querySelectorAll(".history .history-row .grid-item.grid-carbon");
+
+    // Sort purchase history by time
+    PURCHASE_HISTORY.sort((a, b) => new Date(a.date) - new Date(b.date));
+
     for (let i = PURCHASE_HISTORY.length - 1; i >= 0; i--) {
         names[count].innerHTML = PURCHASE_HISTORY[i].name;
         vals[count].innerHTML = _kg(PURCHASE_HISTORY[i].co2) + " kg of CO2";

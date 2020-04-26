@@ -109,10 +109,11 @@ class BackgroundMessage {
                     products.forEach(product => {
                         const purchase = {
                             "product_name": product.product_name,
-                            "purchase_location": "amazon",
-                            "price": product.price,
                             "product_category": product.api_category,
+                            "price": product.price,
                             "quantity": product.quantity,
+                            "purchase_location": "amazon",
+                            "purchase_date": new Date().toISOString(),
                         };
 
                         // ON BACKEND

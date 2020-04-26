@@ -9,6 +9,8 @@ var graphLabel;
 var labels;
 var datas;
 
+var myChart;
+
 function carbon() {
     colour = "rgb(121,200,166)";
     bgColour = "rgba(121,200,166,0.5)";
@@ -38,7 +40,8 @@ function water() {
 
 function drawGraph() {
     var ctx = document.getElementById('co2-chart');
-    var myChart = new Chart(ctx, {
+
+    myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,

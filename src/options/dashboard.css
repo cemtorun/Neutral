@@ -222,6 +222,7 @@ hr.gray {
     margin: 16px;
     padding: 24px;
     padding-bottom: 32px;
+    box-shadow: 0 0 6px 1px lightgrey;
 }
 
 .card-fit {
