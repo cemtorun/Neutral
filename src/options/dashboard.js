@@ -314,7 +314,7 @@ async function deleteHistory(id, date) {
         xhttp.send();
     } else {
         // DELETE FROM LOCAL STORAGE
-        chrome.storage.local.get('neutral_purchases', function(result) {
+        chrome.storage.local.get('neutral_purchases', function (result) {
             const purchases = result.neutral_purchases;
             const afterRemove = purchases.filter((purchase) => !(purchase.product_name == id && purchase.purchase_date == date));
 
@@ -327,68 +327,87 @@ async function deleteHistory(id, date) {
     }
 }
 
+$("#header-perm-text").on("click", async function () {
+    var user = await getUser();
+
+    if (!user) {
+        document.getElementById("header").classList.toggle("show-full");
+        document.getElementById("header-showing").classList.toggle("hidden");
+    }
+});
+
 async function updateUserStatus() {
-	var user = await getUser();
-	if(user) {
-		$("#login-signup").addClass("hidden");
-		$("#user-info").removeClass("hidden");
-		$("#user-name")[0].innerText = user.user.username;
-	} else {
-		$("#login-signup").removeClass("hidden");
-		$("#user-info").addClass("hidden");
-	}
+    var user = await getUser();
+    if (user) {
+        $("#login-signup").addClass("hidden");
+        $("#user-info").removeClass("hidden");
+        $("#header-perm-text").removeClass("pointer");
+        $("#header-perm-text")[0].innerHTML = 'Hi ' + user.user.username + '! <button id="btn-logout" class="btn">Logout</button>';
+        getData();
+        $("#header-showing").addClass("hidden");
+        $("#header").removeClass("show-full");
+        $("#btn-logout").on("click", function () {
+            userLogout();
+            updateUserStatus();
+        });
+    } else {
+        $("#login-signup").removeClass("hidden");
+        $("#user-info").addClass("hidden");
+        getData();
+        $("#header-perm-text")[0].innerHTML = 'Login/Signup to sync your past purchases <i class="fas fa-arrow-down"></i>';
+    }
 }
 
-$("#signup-tab").on("click", function() {
-	$("#login").addClass("hidden");
-	$("#signup").removeClass("hidden");
-	$("#login-tab").removeClass("active");
-	$("#signup-tab").addClass("active");
+$("#signup-tab").on("click", function () {
+    $("#login").addClass("hidden");
+    $("#signup").removeClass("hidden");
+    $("#login-tab").removeClass("active");
+    $("#signup-tab").addClass("active");
 });
 
-$("#login-tab").on("click", function() {
-	$("#login").removeClass("hidden");
-	$("#signup").addClass("hidden");
-	$("#login-tab").addClass("active");
-	$("#signup-tab").removeClass("active");
+$("#login-tab").on("click", function () {
+    $("#login").removeClass("hidden");
+    $("#signup").addClass("hidden");
+    $("#login-tab").addClass("active");
+    $("#signup-tab").removeClass("active");
 });
 
-$("#signup").on("submit", function() {
-	(async function() {
-		try {
-			var res = await userRegister($("#signupUser")[0].value, $("#signupEmail")[0].value, $("#signupPassword")[0].value);
-			$("#signupUser")[0].value = "";
-			$("#signupEmail")[0].value = "";
-			$("#signupPassword")[0].value = "";
-			$("#err-msg-login")[0].innerText = ""
-			updateUserStatus();
-		} catch(err) {
-			$("#err-msg-signup")[0].innerText = "THAT FAILED, CHECK YOUR INPUTS: " + err.message[0].messages[0].message;
-			console.log(err);
-		}
-	})();
-	return false;
+$("#signup").on("submit", function () {
+    (async function () {
+        try {
+            var res = await userRegister($("#signupUser")[0].value, $("#signupEmail")[0].value, $("#signupPassword")[0].value);
+            $("#signupUser")[0].value = "";
+            $("#signupEmail")[0].value = "";
+            $("#signupPassword")[0].value = "";
+            $("#err-msg-login")[0].innerText = ""
+            updateUserStatus();
+        } catch (err) {
+            $("#err-msg-signup")[0].innerText = "Error: " + err.message[0].messages[0].message;
+            console.log(err);
+        }
+    })();
+    return false;
 });
 
-$("#login").on("submit", function() {
-	(async function() {
-		try {
-			var res = await userLogin($("#loginIdentifier")[0].value, $("#loginPassword")[0].value);
-			$("#loginIdentifier")[0].value = "";
-			$("#loginPassword")[0].value = "";
-			$("#err-msg-login")[0].innerText = ""
-			updateUserStatus();
-		} catch(err) {
-			$("#err-msg-login")[0].innerText = "THAT FAILED, CHECK YOUR INPUTS: " + err.message[0].messages[0].message;
-			console.log(err);
-		}
-	})();
-	return false;
+$("#login").on("submit", function () {
+    (async function () {
+        try {
+            var res = await userLogin($("#loginIdentifier")[0].value, $("#loginPassword")[0].value);
+            $("#loginIdentifier")[0].value = "";
+            $("#loginPassword")[0].value = "";
+            $("#err-msg-login")[0].innerText = ""
+            updateUserStatus();
+        } catch (err) {
+            $("#err-msg-login")[0].innerText = "Error: " + err.message[0].messages[0].message;
+            console.log(err);
+        }
+    })();
+    return false;
 });
 
-$("#btn-logout").on("click", function() {
-	userLogout();
-	updateUserStatus();
+$("#btn-logout").on("click", function () {
+    userLogout();
+    updateUserStatus();
 });
 
 updateUserStatus();

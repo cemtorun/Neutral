@@ -343,7 +343,7 @@ button>p {
 }
 
 #login-signup {
-	width: 500px;
+	max-width: 500px;
 }
 
 .form-control {
@@ -356,4 +356,38 @@ button>p {
 
 .form-control:focus {
 	z-index: 2;
+}
+
+#header {
+    height: 60px;
+    border-bottom: 1px solid lightgray;
+    background-color: white;
+    transition: height 0.1s linear;
+}
+
+#header-permanent {
+    height: 60px;
+    padding: 15px;
+}
+#header-permanent img {
+    height: 100%;
+}
+
+#header-perm-text {
+    float:right;
+    padding-right: 12px;
+    font-weight: 300;
+    font-style: italic;
+}
+.pointer {
+    cursor: pointer;
+}
+#header.show-full {
+    height: 367px;
+}
+
+#btn-logout {
+    line-height: 0px;
+    margin-top: -4px;
+    text-decoration: underline;
 }
