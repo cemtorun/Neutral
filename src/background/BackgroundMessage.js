@@ -127,7 +127,7 @@ class BackgroundMessage {
                             }
                             xhttp.open("POST", "http://neutral-dev.tk:1337/purchases", true);
                             xhttp.setRequestHeader("Content-type", "application/json");
-                            const token = await getUser().jwt;
+                            const token = (await getUser()).jwt;
                             xhttp.setRequestHeader("Authorization", "Bearer " + token);
                             xhttp.send(JSON.stringify(purchase));
                         }
@@ -135,13 +135,16 @@ class BackgroundMessage {
                     });
 
                     // LOCALLY
-                    chrome.storage.local.get('neutral_purchases', function (result) {
-                        if (result && result.neutral_purchases) {
-                            purchases.push(...result.neutral_purchases);
-                        }
-                        chrome.storage.local.set({ neutral_purchases: purchases }, null);
-                        console.log(purchases);
-                    });
+                    const loggedIn = await isLoggedIn();
+                    if (!loggedIn) {
+                        chrome.storage.local.get('neutral_purchases', function (result) {
+                            if (result && result.neutral_purchases) {
+                                purchases.push(...result.neutral_purchases);
+                            }
+                            chrome.storage.local.set({ neutral_purchases: purchases }, null);
+                            console.log(purchases);
+                        });
+                    }
                 }
             });
 

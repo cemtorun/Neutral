@@ -119,6 +119,7 @@ function updateEmissionsData(product) {
     });
 
     CO2_TREND_DATA = [];
+    totalEmissions = 0;
     CO2_TREND.forEach((e) => {
         if (!CO2_TREND_DATA[e.date])
             CO2_TREND_DATA[e.date] = 0;
@@ -205,7 +206,7 @@ async function getData() {
         }
         xhttp.open("GET", "http://neutral-dev.tk:1337/purchases", true);
         xhttp.setRequestHeader("Content-type", "application/json");
-        const token = await getUser().jwt;
+        const token = (await getUser()).jwt;
         xhttp.setRequestHeader("Authorization", "Bearer " + token);
         xhttp.send();
     } else {

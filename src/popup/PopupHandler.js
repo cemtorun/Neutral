@@ -30,7 +30,7 @@ class PopupHandler extends AbstractWebsiteHandler {
             }
             xhttp.open("GET", "http://neutral-dev.tk:1337/purchases", true);
             xhttp.setRequestHeader("Content-type", "application/json");
-            const token = await getUser().jwt;
+            const token = (await getUser()).jwt;
             xhttp.setRequestHeader("Authorization", "Bearer " + token);
             xhttp.send();
         } else {
