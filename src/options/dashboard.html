@@ -29,7 +29,8 @@
 					<input type="text" id="signupUser" class="form-control" placeholder="Username" required autofocus>
 					<input type="email" id="signupEmail" class="form-control" placeholder="Email address" required autofocus>
 					<input type="password" id="signupPassword" class="form-control" placeholder="Password" required>
-					<button id="signup" class="btn btn-lg btn-primary btn-block login-signup-button" type="submit">Sign up</button>
+					<div id="err-msg-signup" class="err-msg"></div>
+					<button id="btn-signup" class="btn btn-lg btn-primary btn-block login-signup-button" type="submit">Sign up</button>
 				</form>
 			</div>
 
@@ -37,10 +38,12 @@
 				<form class="form-signin">
 					<input type="text" id="loginIdentifier" class="form-control" placeholder="Username or Email" required autofocus>
 					<input type="password" id="loginPassword" class="form-control" placeholder="Password" required>
-					<button id="signin" class="btn btn-lg btn-primary btn-block login-signup-button" type="submit">Sign in</button>
+					<div id="err-msg-login" class="err-msg"></div>
+					<button id="btn-signin" class="btn btn-lg btn-primary btn-block login-signup-button" type="submit">Log in</button>
 				</form>
 			</div>
 		</div>
+		<div id="user-info"><h1>CONGRATULATIONS, YOU HAVE SUCCESSFULLY LOGGED IN. YOUR NAME IS <span id="user-name"></span></h1><button id="btn-logout" class="btn btn-lg btn-primary btn-block">LOG OUT IMMEDIATELY</button></div>
         <div class="container main-content">
             <div class="row top-padding ">
                 <h1>

@@ -327,6 +327,18 @@ async function deleteHistory(id, date) {
     }
 }
 
+async function updateUserStatus() {
+	var user = await getUser();
+	if(user) {
+		$("#login-signup").addClass("hidden");
+		$("#user-info").removeClass("hidden");
+		$("#user-name")[0].innerText = user.user.username;
+	} else {
+		$("#login-signup").removeClass("hidden");
+		$("#user-info").addClass("hidden");
+	}
+}
+
 $("#signup-tab").on("click", function() {
 	$("#login").addClass("hidden");
 	$("#signup").removeClass("hidden");
@@ -340,3 +352,43 @@ $("#login-tab").on("click", function() {
 	$("#login-tab").addClass("active");
 	$("#signup-tab").removeClass("active");
 });
+
+$("#signup").on("submit", function() {
+	(async function() {
+		try {
+			var res = await userRegister($("#signupUser")[0].value, $("#signupEmail")[0].value, $("#signupPassword")[0].value);
+			$("#signupUser")[0].value = "";
+			$("#signupEmail")[0].value = "";
+			$("#signupPassword")[0].value = "";
+			$("#err-msg-login")[0].innerText = ""
+			updateUserStatus();
+		} catch(err) {
+			$("#err-msg-signup")[0].innerText = "THAT FAILED, CHECK YOUR INPUTS: " + err.message[0].messages[0].message;
+			console.log(err);
+		}
+	})();
+	return false;
+});
+
+$("#login").on("submit", function() {
+	(async function() {
+		try {
+			var res = await userLogin($("#loginIdentifier")[0].value, $("#loginPassword")[0].value);
+			$("#loginIdentifier")[0].value = "";
+			$("#loginPassword")[0].value = "";
+			$("#err-msg-login")[0].innerText = ""
+			updateUserStatus();
+		} catch(err) {
+			$("#err-msg-login")[0].innerText = "THAT FAILED, CHECK YOUR INPUTS: " + err.message[0].messages[0].message;
+			console.log(err);
+		}
+	})();
+	return false;
+});
+
+$("#btn-logout").on("click", function() {
+	userLogout();
+	updateUserStatus();
+});
+
+updateUserStatus();
