@@ -114,6 +114,7 @@ function updateEmissionsData(product) {
     });
     PURCHASE_HISTORY.push({
         name: product.product_name,
+        id: product.id,
         date: product.purchase_date,
         co2: product.api_co2_result.co2e
     });
@@ -187,6 +188,20 @@ function getEmissionsData(product) {
 }
 
 async function getData() {
+    // Reset Globals
+    CO2_TREND = [];
+    ENERGY_TREND = [];
+    WATER_TREND = [];
+    CATEGORY_PIE = [];
+    PURCHASE_HISTORY = [];
+    CO2_TREND_DATA = [];
+    ENERGY_TREND_DATA = [];
+    WATER_TREND_DATA = [];
+    CATEGORY_PIE_DATA = [];
+    PURCHASE_HISTORY_DATA = [];
+    totalEmissions = 0;
+    totalWater = 0;
+
     const loggedIn = await isLoggedIn();
     if (loggedIn) {
         // GET PURCHASES FROM BACKEND
@@ -201,6 +216,13 @@ async function getData() {
                     content.forEach(product => {
                         getEmissionsData(product);
                     });
+
+                    if (content.length == 0) {
+                        carbon();
+                        drawPie();
+                        changeWhales();
+                        updatePage();
+                    }
                 }
             }
         }
@@ -232,8 +254,15 @@ function updatePage() {
     //document.querySelector('.treeDollar').innerHTML = treeDollar;
 
     let count = 0;
+    const actions = document.querySelectorAll(".history .history-row .grid-item.grid-action");
     const names = document.querySelectorAll(".history .history-row .grid-item.grid-name");
     const vals = document.querySelectorAll(".history .history-row .grid-item.grid-carbon");
+
+    for (let i = 0; i < 4; i++) {
+        names[i].innerHTML = "";
+        vals[i].innerHTML = "";
+        actions[i].innerHTML = "";
+    }
 
     // Sort purchase history by time
     PURCHASE_HISTORY.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -241,7 +270,34 @@ function updatePage() {
     for (let i = PURCHASE_HISTORY.length - 1; i >= 0; i--) {
         names[count].innerHTML = PURCHASE_HISTORY[i].name;
         vals[count].innerHTML = _kg(PURCHASE_HISTORY[i].co2) + " kg of CO2";
+
+        actions[count].innerHTML = '<button id="delete-' + PURCHASE_HISTORY[i].id + '" class="btn">X</button>';
+        const newDelButton = document.getElementById("delete-" + PURCHASE_HISTORY[i].id);
+        newDelButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            deleteHistory(PURCHASE_HISTORY[i].id);
+        });
+
         if (count++ >= 3)
             break;
+    }
+}
+
+async function deleteHistory(id) {
+    const loggedIn = await isLoggedIn();
+    if (loggedIn) {
+        // SEND DELETE REQUEST TO BACKEND
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = () => {
+            if (xhttp.readyState == 4) {
+                console.log(xhttp.responseText);
+                getData();
+            }
+        }
+        xhttp.open("DELETE", "http://neutral-dev.tk:1337/purchases/" + id, true);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        const token = (await getUser()).jwt;
+        xhttp.setRequestHeader("Authorization", "Bearer " + token);
+        xhttp.send();
     }
 }

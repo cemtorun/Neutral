@@ -293,3 +293,15 @@ button>p {
         max-width: calc(33.333333% - 32px);
     }
 }
+
+.grid-action {
+    width: 32px;
+}
+.grid-action button {
+    width: 25px;
+    height: 25px;
+    line-height: 12px;
+    padding-left: 7px;
+    color: darkgray;
+    margin-top: -10px;
+}
