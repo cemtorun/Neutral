@@ -50,7 +50,7 @@ async function userRegister(username, email, password) {
 async function getUser() {
 	return await new Promise(function(resolve, reject) {
 		chrome.storage.local.get(["login"], function(res) {
-			resolve(res.jwt);
+			resolve(res.login);
 		});
 	});
 }
