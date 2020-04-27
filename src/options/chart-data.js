@@ -1,6 +1,6 @@
-document.getElementById("type-co2").addEventListener("click", carbon);
-document.getElementById("type-energy").addEventListener("click", energy);
-document.getElementById("type-water").addEventListener("click", water);
+//document.getElementById("type-co2").addEventListener("click", carbon);
+//document.getElementById("type-energy").addEventListener("click", energy);
+//document.getElementById("type-water").addEventListener("click", water);
 
 var selected = "carbon";
 var colour;
