@@ -96,16 +96,17 @@ function updateEmissionsData(product) {
         category = product.product_category.split("/")[1];
     }
 
+    const dateString = new Date(product.purchase_date).toLocaleDateString();
     CO2_TREND.push({
-        date: new Date(product.purchase_date).toLocaleDateString(),
+        date: dateString,
         data: product.api_co2_result.co2e
     });
     WATER_TREND.push({
-        date: new Date(product.purchase_date).toLocaleDateString(),
+        date: dateString,
         data: product.api_co2_result.water
     });
     ENERGY_TREND.push({
-        date: new Date(product.purchase_date).toLocaleDateString(),
+        date: dateString,
         data: product.api_co2_result.energy
     });
     CATEGORY_PIE.push({
@@ -116,9 +117,15 @@ function updateEmissionsData(product) {
         name: product.product_name,
         real_name: product.product_real_name,
         id: product.id,
-        date: new Date(product.purchase_date).toLocaleDateString(),
+        date: dateString,
         co2: product.api_co2_result.co2e
     });
+
+    // Sort graphs and purchase history
+    CO2_TREND.sort((a, b) => new Date(a.date) - new Date(b.date));
+    WATER_TREND.sort((a, b) => new Date(a.date) - new Date(b.date));
+    ENERGY_TREND.sort((a, b) => new Date(a.date) - new Date(b.date));
+    PURCHASE_HISTORY.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     CO2_TREND_DATA = [];
     totalEmissions = 0;
@@ -284,9 +291,6 @@ function updatePage() {
         vals[i].innerHTML = "";
         actions[i].innerHTML = "";
     }
-
-    // Sort purchase history by time
-    PURCHASE_HISTORY.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     for (let i = PURCHASE_HISTORY.length - 1; i >= 0; i--) {
         names[count].innerHTML = PURCHASE_HISTORY[i].name;
