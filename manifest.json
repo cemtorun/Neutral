@@ -14,7 +14,8 @@
     "permissions": [
         "tabs",
         "storage",
-        "https://*/*"
+        "http://amazon.ca/*",
+        "http://amazon.com/*"
     ],
     "background": {
         "scripts": [
