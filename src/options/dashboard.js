@@ -97,15 +97,15 @@ function updateEmissionsData(product) {
     }
 
     CO2_TREND.push({
-        date: product.purchase_date,
+        date: new Date(product.purchase_date).toLocaleDateString(),
         data: product.api_co2_result.co2e
     });
     WATER_TREND.push({
-        date: product.purchase_date,
+        date: new Date(product.purchase_date).toLocaleDateString(),
         data: product.api_co2_result.water
     });
     ENERGY_TREND.push({
-        date: product.purchase_date,
+        date: new Date(product.purchase_date).toLocaleDateString(),
         data: product.api_co2_result.energy
     });
     CATEGORY_PIE.push({
@@ -116,7 +116,7 @@ function updateEmissionsData(product) {
         name: product.product_name,
         real_name: product.product_real_name,
         id: product.id,
-        date: product.purchase_date,
+        date: new Date(product.purchase_date).toLocaleDateString(),
         co2: product.api_co2_result.co2e
     });
 

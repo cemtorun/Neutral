@@ -221,3 +221,7 @@ p.merchant {
   padding: 2px;
   cursor: pointer;
 }
+
+.pointer {
+  cursor: pointer;
+}
